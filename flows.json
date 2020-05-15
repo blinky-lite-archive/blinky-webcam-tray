@@ -216,7 +216,7 @@
         "id": "44b51478.9c022c",
         "type": "websocket-listener",
         "z": "",
-        "path": "/gladys-kravitz-cam/websocket",
+        "path": "/websocket",
         "wholemsg": "false"
     },
     {
@@ -393,10 +393,10 @@
         "id": "107beeed.934ed1",
         "type": "websocket out",
         "z": "5f562f66.a301e",
-        "name": "/gladys-kravitz-cam/websocket",
+        "name": "/websocket",
         "server": "44b51478.9c022c",
         "client": "",
-        "x": 1450,
+        "x": 1390,
         "y": 520,
         "wires": []
     },
@@ -935,10 +935,10 @@
         "id": "c43545a1.5deb28",
         "type": "websocket in",
         "z": "c4285970.3276d8",
-        "name": "/gladys-kravitz-cam/websocket",
+        "name": "/websocket",
         "server": "44b51478.9c022c",
         "client": "",
-        "x": 170,
+        "x": 100,
         "y": 80,
         "wires": [
             [
@@ -947,28 +947,11 @@
         ]
     },
     {
-        "id": "1482e22f.57fa2e",
-        "type": "http in",
-        "z": "c4285970.3276d8",
-        "name": "/gladys-kravitz-cam",
-        "url": "/gladys-kravitz-cam",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 150,
-        "y": 380,
-        "wires": [
-            [
-                "71ce0943.81bf18"
-            ]
-        ]
-    },
-    {
         "id": "71ce0943.81bf18",
         "type": "function",
         "z": "c4285970.3276d8",
         "name": "Set Name And Device Type",
-        "func": "msg.payload['script'] = {};\nmsg.payload['script']['name'] = msg.payload.name\nmsg.payload['script']['deviceType'] = 'gladys-kravitz-cam';\nmsg.payload['script']['project'] = global.get('project');\nreturn msg;\n",
+        "func": "msg.payload['script'] = {};\nmsg.payload['script']['name'] = '01'\nmsg.payload['script']['deviceType'] = 'gladys-kravitz-cam';\nmsg.payload['script']['project'] = global.get('project');\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 400,
@@ -988,7 +971,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "Gladys Kravitz Cam {{{payload.script.name}}}",
+        "template": "Gladys Kravitz {{{payload.script.name}}}",
         "output": "str",
         "x": 340,
         "y": 460,
@@ -1218,98 +1201,13 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 110,
-        "y": 640,
+        "x": 130,
+        "y": 380,
         "wires": [
             [
-                "f328fcb4.91dc"
+                "71ce0943.81bf18"
             ]
         ]
-    },
-    {
-        "id": "b1885d32.8d9cc",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "Body",
-        "field": "payload.body",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "<!-- Body HTML -->\n    <div class='container' width=\"100%\">\n        <div class='row vert-pad' >\n            <div class='col-md-12'>\n                <a class=\"btn jumbotron-button btn-block big-text bold-text\" width='80%' href=\"/gladys-kravitz-cam?name=01\" >\n                    <table width=\"100%\" alight=\"left\">\n                        <tr>\n                            <td width=\"30%\" align='center'> <img src=\"/img/basicYellow.png\" height=\"70px\"/></td>\n                            <td width=\"70%\" align=\"left\">Gladys Kravitz Cam 01</td>\n                        </tr>\n                    </table>\n                </a>\n            </div>\n        </div>\n    </div>",
-        "output": "str",
-        "x": 770,
-        "y": 640,
-        "wires": [
-            [
-                "7efd2bdc.028104"
-            ]
-        ]
-    },
-    {
-        "id": "18e277b4.8fc208",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "Title",
-        "field": "payload.title",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "Gladys Kravitz Cam",
-        "output": "str",
-        "x": 490,
-        "y": 640,
-        "wires": [
-            [
-                "fd81c62c.98f018"
-            ]
-        ]
-    },
-    {
-        "id": "f328fcb4.91dc",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "JavaScript",
-        "field": "payload.javascript",
-        "fieldType": "msg",
-        "format": "javascript",
-        "syntax": "mustache",
-        "template": "        useWebSockets(false);\n        function onDocumentReady()\n        {\n        }\n        function onWebSocketOpen()\n        {\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n        }\n\n",
-        "output": "str",
-        "x": 350,
-        "y": 640,
-        "wires": [
-            [
-                "18e277b4.8fc208"
-            ]
-        ]
-    },
-    {
-        "id": "fd81c62c.98f018",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "navBarIcon",
-        "field": "payload.navBarIcon",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "basicYellow.png",
-        "output": "str",
-        "x": 630,
-        "y": 640,
-        "wires": [
-            [
-                "b1885d32.8d9cc"
-            ]
-        ]
-    },
-    {
-        "id": "7efd2bdc.028104",
-        "type": "subflow:6a402d92.12d7c4",
-        "z": "c4285970.3276d8",
-        "name": "",
-        "x": 930,
-        "y": 640,
-        "wires": []
     },
     {
         "id": "6533b535.454c4c",
@@ -1320,7 +1218,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "basicYellow.png",
+        "template": "binoYellow.png",
         "output": "str",
         "x": 350,
         "y": 420,
