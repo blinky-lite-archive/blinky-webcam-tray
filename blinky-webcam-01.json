@@ -2,12 +2,12 @@
   "deviceType": "blinky-lite-cam",
   "name": "01",
   "arcPeriod": 60000,
-  "timeStamp": 1589778569183,
+  "timeStamp": 1623174944972,
   "lastArchive": 1584283329231,
   "linkQuality": {
     "action": "reading",
     "type": "scalar",
-    "value": 64,
+    "value": 70,
     "unit": "/70",
     "alarm": {
       "value": 0,
@@ -27,7 +27,7 @@
   "signalLevel": {
     "action": "reading",
     "type": "scalar",
-    "value": -46,
+    "value": -38,
     "unit": "dBm",
     "alarm": {
       "value": 0,
@@ -44,10 +44,30 @@
       }
     }
   },
+  "reset": {
+    "action": "setting",
+    "type": "scalar",
+    "value": 0,
+    "unit": "unit",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 2,
+        "hihi": 2
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
   "takeImage": {
     "action": "setting",
     "type": "scalar",
-    "value": 1,
+    "value": 0,
     "unit": "unit",
     "alarm": {
       "value": 0,

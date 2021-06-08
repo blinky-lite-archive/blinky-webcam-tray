@@ -1,15 +1,8 @@
 [
     {
-        "id": "3f2da72f.995ab8",
-        "type": "tab",
-        "label": "Global",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "5f562f66.a301e",
         "type": "tab",
-        "label": "blinky-lite-cam cube",
+        "label": "blinky webcam cube",
         "disabled": false,
         "info": ""
     },
@@ -21,7 +14,7 @@
         "info": ""
     },
     {
-        "id": "f07e020c.d4d43",
+        "id": "5076572e.f4d1e8",
         "type": "subflow",
         "name": "App NavBar",
         "info": "",
@@ -32,7 +25,7 @@
                 "y": 80,
                 "wires": [
                     {
-                        "id": "3ab766b1.558d9a"
+                        "id": "e34121df.1158"
                     }
                 ]
             }
@@ -43,7 +36,7 @@
                 "y": 80,
                 "wires": [
                     {
-                        "id": "3ab766b1.558d9a",
+                        "id": "e34121df.1158",
                         "port": 0
                     }
                 ]
@@ -53,7 +46,7 @@
         "color": "#DDAA99"
     },
     {
-        "id": "188d93e1.8dcc1c",
+        "id": "f20b1460.72ddc8",
         "type": "subflow",
         "name": "HTML",
         "info": "",
@@ -64,16 +57,17 @@
                 "y": 40,
                 "wires": [
                     {
-                        "id": "1da6518.fb1b7af"
+                        "id": "4778bbbd.1da094"
                     }
                 ]
             }
         ],
         "out": [],
-        "env": []
+        "env": [],
+        "color": "#DDAA99"
     },
     {
-        "id": "8857082f.cfdaa8",
+        "id": "7cd12475.110e0c",
         "type": "subflow",
         "name": "App CSS",
         "info": "",
@@ -84,7 +78,7 @@
                 "y": 80,
                 "wires": [
                     {
-                        "id": "73f0aea6.1d002"
+                        "id": "cf64bb0c.ae9988"
                     }
                 ]
             }
@@ -95,16 +89,17 @@
                 "y": 80,
                 "wires": [
                     {
-                        "id": "73f0aea6.1d002",
+                        "id": "cf64bb0c.ae9988",
                         "port": 0
                     }
                 ]
             }
         ],
-        "env": []
+        "env": [],
+        "color": "#DDAA99"
     },
     {
-        "id": "6a402d92.12d7c4",
+        "id": "eb80fbfc.f4e4e8",
         "type": "subflow",
         "name": "App HTML",
         "info": "",
@@ -115,13 +110,14 @@
                 "y": 80,
                 "wires": [
                     {
-                        "id": "b1fab3c6.1f34c"
+                        "id": "c106069f.4393e8"
                     }
                 ]
             }
         ],
         "out": [],
-        "env": []
+        "env": [],
+        "color": "#DDAA99"
     },
     {
         "id": "6ad7c930.1a06b8",
@@ -213,747 +209,47 @@
         }
     },
     {
-        "id": "44b51478.9c022c",
+        "id": "244c3d5e.2550e2",
+        "type": "mqtt-broker",
+        "name": "MQTT Broker",
+        "broker": "$(MQTTSERVERIP)",
+        "port": "1883",
+        "clientid": "$(MQTTCLIENTID)",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8654c923.da8668",
         "type": "websocket-listener",
-        "z": "",
-        "path": "/websocket",
+        "path": "/blinky-webcam/websocket",
         "wholemsg": "false"
-    },
-    {
-        "id": "144aea5f.fcbd96",
-        "type": "JsonWebToken_config",
-        "z": "",
-        "name": "blinky-lite-core-jwt-key",
-        "secret": "$(JWTKEYSECRET)"
-    },
-    {
-        "id": "5902d0c0.241a6",
-        "type": "file",
-        "z": "5f562f66.a301e",
-        "name": "Init Settings",
-        "filename": "",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 1090,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "6eaa13e9.4147bc",
-        "type": "inject",
-        "z": "5f562f66.a301e",
-        "name": "init 1 sec",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "x": 100,
-        "y": 340,
-        "wires": [
-            [
-                "2635280b.22f548"
-            ]
-        ]
-    },
-    {
-        "id": "163af492.5e952b",
-        "type": "file in",
-        "z": "5f562f66.a301e",
-        "name": "Init Settings",
-        "filename": "",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "x": 430,
-        "y": 340,
-        "wires": [
-            [
-                "53c95857.5f3d68"
-            ]
-        ]
-    },
-    {
-        "id": "53c95857.5f3d68",
-        "type": "json",
-        "z": "5f562f66.a301e",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 630,
-        "y": 340,
-        "wires": [
-            [
-                "30f384ea.cf21fc"
-            ]
-        ]
-    },
-    {
-        "id": "30f384ea.cf21fc",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Save initSettings in Memory",
-        "func": "flow.set('device', msg.payload);\nflow.set('newSetting', 1);\nreturn null;",
-        "outputs": 0,
-        "noerr": 0,
-        "x": 860,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "9e954281.d9215",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Make Pretty",
-        "func": "var jsonPretty = JSON.stringify(msg.payload,null,2);\nvar filename = flow.get('cubeInfo').deviceType + '-' + flow.get('cubeInfo').name + '.json';\nreturn {topic: msg.payload, payload:jsonPretty, 'filename':filename};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 910,
-        "y": 140,
-        "wires": [
-            [
-                "5902d0c0.241a6"
-            ]
-        ]
-    },
-    {
-        "id": "7461da25.d86ac4",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Settings Alarm Scan",
-        "func": "scalarAlarmScan(msg.payload, 'setting');\nflow.set('device', msg.payload); \nflow.set('newSetting', 1); \nreturn msg;\n\nfunction getActionArray(device, type, actionType)\n{\n    var actionArray = [];\n    var keys = Object.keys(device);\n    for (var ii = 0; ii < keys.length; ++ii)\n    {\n        if (device[keys[ii]].hasOwnProperty('type'))\n        {\n            if (device[keys[ii]].type == type)\n            {\n                if (device[keys[ii]].action == actionType)\n                {\n                    actionArray.push(device[keys[ii]]);\n                }\n            }\n        }\n    }\n    return actionArray;\n}\nfunction scalarAlarmScan(device, actionType)\n{\n    var actionArray = getActionArray(device, 'scalar', actionType);\n    if (actionArray.length > 0)\n    {\n        for (var ii = 0; ii < actionArray.length; ++ii)\n        {\n            actionArray[ii].alarm.value = 0;\n            if (!isNaN(actionArray[ii].value))\n            {\n                if (actionArray[ii].value < actionArray[ii].alarm.limits.low)  actionArray[ii].alarm.value = 1;\n                if (actionArray[ii].value < actionArray[ii].alarm.limits.lolo) actionArray[ii].alarm.value = 3;\n                if (actionArray[ii].value > actionArray[ii].alarm.limits.high) actionArray[ii].alarm.value = 2;\n                if (actionArray[ii].value > actionArray[ii].alarm.limits.hihi) actionArray[ii].alarm.value = 4;\n            }\n        }\n    }\n}\n",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 720,
-        "y": 140,
-        "wires": [
-            [
-                "9e954281.d9215"
-            ]
-        ]
-    },
-    {
-        "id": "9115ea87.0ca208",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Readings Alarm Scan",
-        "func": "msg.payload.linkQuality.value     = global.get('linkQuality');\nmsg.payload.signalLevel.value     = global.get('signalLevel');\nscalarAlarmScan(msg.payload, 'reading');\nflow.set('device', msg.payload); \nmsg.topic = global.get('project') + '/' + flow.get('cubeInfo').deviceType + '/' + flow.get('cubeInfo').name + '/reading';\nreturn msg;\n\nfunction getActionArray(device, type, actionType)\n{\n    var actionArray = [];\n    var keys = Object.keys(device);\n    for (var ii = 0; ii < keys.length; ++ii)\n    {\n        if (device[keys[ii]].hasOwnProperty('type'))\n        {\n            if (device[keys[ii]].type == type)\n            {\n                if (device[keys[ii]].action == actionType)\n                {\n                    actionArray.push(device[keys[ii]]);\n                }\n            }\n        }\n    }\n    return actionArray;\n}\nfunction scalarAlarmScan(device, actionType)\n{\n    var actionArray = getActionArray(device, 'scalar', actionType);\n    if (actionArray.length > 0)\n    {\n        for (var ii = 0; ii < actionArray.length; ++ii)\n        {\n            actionArray[ii].alarm.value = 0;\n            if (!isNaN(actionArray[ii].value))\n            {\n                if (actionArray[ii].value < actionArray[ii].alarm.limits.low)  actionArray[ii].alarm.value = 1;\n                if (actionArray[ii].value < actionArray[ii].alarm.limits.lolo) actionArray[ii].alarm.value = 3;\n                if (actionArray[ii].value > actionArray[ii].alarm.limits.high) actionArray[ii].alarm.value = 2;\n                if (actionArray[ii].value > actionArray[ii].alarm.limits.hihi) actionArray[ii].alarm.value = 4;\n            }\n        }\n    }\n}\n",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 960,
-        "y": 520,
-        "wires": [
-            [
-                "a3ff8e5.b79de7"
-            ]
-        ]
-    },
-    {
-        "id": "6c15c07a.68169",
-        "type": "link in",
-        "z": "5f562f66.a301e",
-        "name": "cube-01 Settings In",
-        "links": [
-            "9e56a59.12b4158",
-            "6d9f3651.5d58e8"
-        ],
-        "x": 35,
-        "y": 200,
-        "wires": [
-            [
-                "8fd42733.128c98"
-            ]
-        ]
-    },
-    {
-        "id": "a3ff8e5.b79de7",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Split MQTT topic",
-        "func": "var mqttArray = msg.topic.split('/');\nvar device = \n{\n    project     : mqttArray[0],\n    deviceType  : mqttArray[1],\n    name        : mqttArray[2],\n    prop        : mqttArray[3],\n};\nreturn {topic : msg.topic, payload:{topic:'readings', mqttDevice : device, payload:msg.payload}};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1190,
-        "y": 520,
-        "wires": [
-            [
-                "107beeed.934ed1"
-            ]
-        ]
-    },
-    {
-        "id": "107beeed.934ed1",
-        "type": "websocket out",
-        "z": "5f562f66.a301e",
-        "name": "/websocket",
-        "server": "44b51478.9c022c",
-        "client": "",
-        "x": 1390,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "65c2a6ff.a7b8f8",
-        "type": "link in",
-        "z": "5f562f66.a301e",
-        "name": "cube-01 to websocket",
-        "links": [
-            "c2b927f.87df7d8"
-        ],
-        "x": 1295,
-        "y": 600,
-        "wires": [
-            [
-                "107beeed.934ed1"
-            ]
-        ]
-    },
-    {
-        "id": "3ab766b1.558d9a",
-        "type": "template",
-        "z": "f07e020c.d4d43",
-        "name": "navBar",
-        "field": "payload.navBar",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "<!-- navBar -->\n    <div class=\"jumbotron\" width=\"100%\">\n        <table width=\"100%\">\n            <tr>\n                <td style=\"text-align:left; vertical-align:middle;\"  width=\"20%\">\n                    <a href='https://www.blinky-lite.io/' target='_blank'>\n                        <img src=\"/img/BlinkyLogo.gif\" height=\"75px\"/>\n                    </a>                \n                </td>\n                <td width=\"60%\" style=\"text-align:center; vertical-align:middle;\">\n                    <h1 class=\"jumbotron-title big-text bold-text\">\n                        <img src=\"/img/{{{payload.navBarIcon}}}\" height=\"75px\" style=\"padding-right:20px;\"/><span>{{{payload.title}}}</span>\n                    </h1>\n                </td>\n                <td style=\"text-align:right; vertical-align:middle;\" width=\"20%\">\n                    <a href='/'><img src=\"/img/home.png\" height=\"75px\"/></a>\n                </td>\n            </tr>\n        </table>\n    </div>\n",
-        "output": "str",
-        "x": 200,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "4109bee6.c2294",
-        "type": "template",
-        "z": "188d93e1.8dcc1c",
-        "name": "HTML",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n{{{payload.head}}}\n  </head>\n  <body>\n{{{payload.navBar}}}\n{{{payload.html.websocket}}}\n{{{payload.body}}}\n{{{payload.foot}}}\n  </body>\n</html>",
-        "output": "str",
-        "x": 1150,
-        "y": 40,
-        "wires": [
-            [
-                "fd2bae7.8730f5"
-            ]
-        ]
-    },
-    {
-        "id": "ed534f2d.ee021",
-        "type": "template",
-        "z": "188d93e1.8dcc1c",
-        "name": "Foot",
-        "field": "payload.foot",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "    <div id=\"acknowledgeDialog\" title=\"Acknowledge\" class='card'>\n        <p class='card-title' id='acknowledgeDialogTitle'>Warning</p>\n        <div class='card-body'>\n            <p class='tableText' id='acknowledgeDialogText'>Text</p>\n        </div>\n    </div>\n    <div id=\"optionDialog\" title=\"Option\" class='card'>\n        <p class='card-title' id='optionDialogTitle'>Choice</p>\n        <div class='card-body'>\n            <p class='tableText' id='optionDialogText'>Text</p>\n        </div>\n    </div>\n    <div id=\"messageDialog\" title=\"Message\" class='card'>\n        <p class='card-title' id='messageDialogTitle'>Warning</p>\n        <div class='card-body'>\n            <p class='tableText' id='messageDialogText'>Text</p>\n        </div>\n    </div>\n    <div id=\"loginDialog\" title=\"Login\" class='card'>\n        <div class='card-body'>\n            <table>\n                <tr>\n                    <td width=\"50%\" align=\"left\"><span class=\"tableText\">Password</span></td>\n                    <td width=\"50%\" align=\"right\"><input class=\"form-control tableText\" id=\"loginPassword\" type=\"password\" value=\"\" /></td>\n                </tr>\n           </table>\n        </div>\n    </div>    \n    <script src=\"/scripts/popper.js\"></script>\n    <script src=\"/scripts/bootstrap.js\"></script>",
-        "output": "str",
-        "x": 690,
-        "y": 40,
-        "wires": [
-            [
-                "20e2a34a.7be64c"
-            ]
-        ]
-    },
-    {
-        "id": "91ca4a7b.9010f8",
-        "type": "template",
-        "z": "188d93e1.8dcc1c",
-        "name": "Head",
-        "field": "payload.head",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "    <meta charset=\"UTF-8\">\n    <link rel=\"icon\" href=\"/img/favicon.ico?v=4\" type=\"image/x-icon\"/>\n    <title>{{payload.title}}</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.css\"/>\n    <link rel=\"stylesheet\" href=\"/jquery/jquery-ui.css\"/>\n    <link rel=\"stylesheet\" href=\"/jquery/jquery-ui-timepicker-addon.css\"/>\n    <script src=\"/jquery/jquery.js\"></script>\n    <script src=\"/jquery/jquery-ui.js\"></script>\n    <script src=\"/jquery/jquery-ui-timepicker-addon.js\"></script>\n    <script src=\"/scripts/plotly-latest.min.js\"></script>\n    <script src=\"/scripts/visDist/vis.js\"></script>\n    <style>\n{{{payload.css}}}\n    </style>\n    <script>\n{{{payload.utilityScripts}}}\n    </script>\n    <script>\n{{{payload.javascript}}}\n    </script>",
-        "output": "str",
-        "x": 570,
-        "y": 40,
-        "wires": [
-            [
-                "ed534f2d.ee021"
-            ]
-        ]
-    },
-    {
-        "id": "fd2bae7.8730f5",
-        "type": "http response",
-        "z": "188d93e1.8dcc1c",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 1270,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "85f6e038.56c86",
-        "type": "template",
-        "z": "188d93e1.8dcc1c",
-        "name": "Utility Scripts",
-        "field": "payload.utilityScripts",
-        "fieldType": "msg",
-        "format": "javascript",
-        "syntax": "mustache",
-        "template": "        var ws;\n        var userID = -1;\n        var useWebSocketsFlag = true;\n        var projectName = '{{{payload.projectname}}}';\n        var heartBeatImage = false;\n        var wsUri = '';\n\n        function useWebSockets(webSocketsFlag)\n        {\n            useWebSocketsFlag = webSocketsFlag;\n        }\n        function wsConnectC()\n        {\n            if (!useWebSocketsFlag)\n            {\n                return;\n            }\n            if (wsUri.length < 1)\n            {\n                var uri = window.location.href.split('://');\n                var wslead = 'ws://';\n                if (uri[0] == 'https') wslead = 'wss://';\n                var questionLocation = uri[1].indexOf('?');\n                if (questionLocation >= 0)\n                {\n                    uri[1] = uri[1].substring(0,questionLocation);\n//                    console.log(uri[1]);\n                }\n                if (uri[1].indexOf('/') < (uri[1].length - 1))\n                {\n                    wsUri = wslead + uri[1] + '/websocket';\n                }\n                else\n                {\n                    wsUri = wslead + uri[1] + 'websocket';\n                }\n            }\n            ws = new WebSocket(wsUri);\n            ws.onmessage = function(event)\n            {\n                onWebSocketMessage(JSON.parse(event.data));\n        \n            };\n            ws.onopen = function()\n            {\n                console.log(\"Websocket connected\");\n                $('#webSocketStatus').html('Open');\n                $('#reOpenWebSocketButton').hide();\n                $('#webSocketStatusRow').css('padding-bottom','0px');\n                $('#webSocketStatusCard').hide();\n                onWebSocketOpen();\n            };\n            ws.onclose = function()\n            {\n                console.log(\"Websocket closed\");\n                $('#webSocketStatus').html('Closed');\n                $('#reOpenWebSocketButton').show();\n                $('#webSocketStatusCard').show();\n                $('#webSocketStatusRow').css('padding-bottom','25px');\n                onWebSocketClose();\n            };\n        }\n        function sendWebSocketMessageObject(message)\n        {\n            ws.send(JSON.stringify(message));\n        }\n\n        function getRandomInt(max)\n        {\n          return Math.floor(Math.random() * Math.floor(max));\n        }\n        $( document ).ready(function()\n        {\n            loginDialog(\"close\");\n//            userID  = getRandomInt(32768);\n            userID  = {{{payload.userID}}};\n            if (!useWebSocketsFlag)\n            {\n                $('#webSocketStatusRow').css('padding-bottom','0px');\n                $('#webSocketStatusCard').hide();\n            }\n            wsConnectC();\n            onDocumentReady();\n        });\n        $( function() \n        {\n            $( \"#acknowledgeDialog\" ).dialog(\n                {\n                    width:    500,\n                    autoOpen: false,\n                    buttons:\n                    [\n                        {\n                            text: \"Ok\",\n                            click: function() { $( this ).dialog( \"close\" );},\n                            showText: false\n                        },\n                   ]\n                });\n            $( \"#messageDialog\" ).dialog(\n                {\n                    width:    500,\n                    autoOpen: false,\n                    buttons:[]\n                });\n        } );\n        function optionDialog(headerText, title, text, buttonTexts, buttonFunctions)\n        {\n            var buttonDefinitions = [];\n            for (var ii = 0; ii < buttonTexts.length; ++ii)\n            {\n                buttonDefinitions[ii] = \n                    {\n                        text: buttonTexts[ii],\n                        click: buttonFunctions[ii],\n                        showText: false\n                    };\n            }\n            $( \"#optionDialog\" ).dialog( \"option\", \"title\", headerText );   \n            $( \"#optionDialog\" ).dialog( \"option\", \"buttons\", buttonDefinitions);\n            $( \"#optionDialogTitle\" ).html(title);\n            $( \"#optionDialogText\" ).html(text);\n            $( \"#optionDialog\" ).dialog( \"open\" );\n        }\n        $( function() \n        {\n            $( \"#optionDialog\" ).dialog(\n                {\n                    width:    500,\n                    autoOpen: false,\n                    buttons:\n                    [\n                        {\n                            text: \"Ok\",\n                            click: function() {$( this ).dialog( \"close\" );},\n                            showText: false\n                        },\n                        {\n                            text: \"Cancel\",\n                            click: function() {$( this ).dialog( \"close\" );},\n                            showText: false\n                        },\n                   ]\n                });\n        } );\n        function acknowledgeDialog(headerText, title, text)\n        {\n            $( \"#acknowledgeDialog\" ).dialog( \"option\", \"title\", headerText );    \n            $( \"#acknowledgeDialogTitle\" ).html(title);\n            $( \"#acknowledgeDialogText\" ).html(text);\n            $( \"#acknowledgeDialog\" ).dialog( \"open\" );\n        }\n        function messageDialog(headerText, title, text)\n        {\n            $( \"#messageDialog\" ).dialog( \"option\", \"title\", headerText );    \n            $( \"#messageDialogTitle\" ).html(title);\n            $( \"#messageDialogText\" ).html(text);\n            $( \"#messageDialog\" ).dialog( \"open\" );\n        }\n        var jwtToken = '';\n        var loginCallback = null;\n        var loginCallbackInfo = null;\n        function checkLogin(callback, callbackInfo)\n        {\n            if (jwtToken.length > 0) return callback(callbackInfo);\n            loginDialog(\"open\", callback, callbackInfo);\n        }\n        function loadJwtToken(data)\n        {\n            if (data.token == null)\n            {\n                acknowledgeDialog('Error', 'Login', 'Denied');\n            }\n            else\n            {\n                jwtToken = data.token;\n                loginCallback(loginCallbackInfo);\n            }\n        }\n        function loginDialog(action, callback, callbackInfo) \n        {\n            $( \"#loginDialog\" ).dialog(\n                {\n//                    closeOnEscape: false,\n//                    open: function(event, ui) {$(\".ui-dialog-titlebar-close\", ui.dialog | ui).hide();},\n                    width:    500,\n                    autoOpen: false,\n                    buttons:\n                    [\n                        {\n                            text: \"Login\",\n                            click: function() \n                            {\n                                ws.send(JSON.stringify(\n                                {\n                                    topic       : 'getJwtToken',\n                                    payload     : \n                                    {\n//                                        loginUser       : $('#loginUser').val(),\n                                        loginPassword   : $('#loginPassword').val()\n                                    },\n                                    'userID'    : userID,\n                                }));\n                                loginCallback = callback;\n                                loginCallbackInfo = callbackInfo;\n                                $( this ).dialog( \"close\" );\n                            },\n                            showText: false\n                        },\n                        {\n                            text: \"Cancel\",\n                            click: function() {$( this ).dialog( \"close\" );},\n                            showText: false\n                        }\n                    ]\n                });\n            $( \"#loginDialog\" ).dialog(action);\n        }\n        function sendSettingToMqtt(mqttMessage)\n        {\n            var socketMessage = \n            {\n                topic       : 'sendSettingToMqtt',\n                mqttMessage : mqttMessage,\n                token       : jwtToken,\n                userID      : userID\n            };\n            sendWebSocketMessageObject({topic : 'sendSettingToMqtt', mqttMessage : mqttMessage, token : jwtToken, userID : userID});\n        }\n        function heartbeat()\n        {\n            heartBeatImage = !heartBeatImage;\n            var heartBeatImageSrc = '/img/heartRed.png';\n            if (heartBeatImage) heartBeatImageSrc = '/img/heartPink.png';\n            $('#heartBeatID').attr('src',heartBeatImageSrc);\n        }\n",
-        "output": "str",
-        "x": 430,
-        "y": 40,
-        "wires": [
-            [
-                "91ca4a7b.9010f8"
-            ]
-        ]
-    },
-    {
-        "id": "1da6518.fb1b7af",
-        "type": "function",
-        "z": "188d93e1.8dcc1c",
-        "name": "Create userID",
-        "func": "function getRandomInt(max)\n{\n  return Math.floor(Math.random() * Math.floor(max));\n}\nmsg.payload['userID'] = getRandomInt(32768);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 180,
-        "y": 40,
-        "wires": [
-            [
-                "85f6e038.56c86"
-            ]
-        ]
-    },
-    {
-        "id": "20e2a34a.7be64c",
-        "type": "template",
-        "z": "188d93e1.8dcc1c",
-        "name": "html.websocket",
-        "field": "payload.html.websocket",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "<!-- websocket status HTML -->\n    <div width=\"100%\">\n        <div class='row' id='webSocketStatusRow' style='padding-bottom: 0px;'>\n            <div class='col-md-12' align='center'>\n\n                <div class='card' id='webSocketStatusCard' >\n                    <p class='card-title'>Web Socket Status</p>\n                    <div class='card-body' align=\"center\">\n                        <div class='row'  style='padding-top: 0px;'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Websocket Status</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <button class='btn card-button btn-block big-text' id='reOpenWebSocketButton' onclick=\"wsConnectC()\">Re-open</button>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text' id='webSocketStatus' >Closed</span>\n                                   </td>\n                                </tr>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n",
-        "output": "str",
-        "x": 840,
-        "y": 40,
-        "wires": [
-            [
-                "4109bee6.c2294"
-            ]
-        ]
-    },
-    {
-        "id": "73f0aea6.1d002",
-        "type": "template",
-        "z": "8857082f.cfdaa8",
-        "name": "CSS",
-        "field": "payload.css",
-        "fieldType": "msg",
-        "format": "css",
-        "syntax": "mustache",
-        "template": "        :root \n        {\n          --color1: #415c71;\n          --color2: #547792;\n          --color3: #9eb5c7;\n          --color4: #c6c2bb;\n          --color5: #fdc300;\n          --big-text-size :300%;\n          --bold-text :900;\n          --vert-pad : 25px;\n          --horz-pad : 25px;\n        }\n        body \n        {\n          background-color: white !important;\n          padding-left:25px;\n          padding-right:25px;\n        }\n        \n        img \n        {\n          object-fit: contain;\n        }\n        a\n        {\n            color: white;\n        }\n        a:visited \n        { \n            color: var(--white);\n        }\n        a:hover \n        { \n            color: var(--color5);\n        }\n\n        .jumbotron \n        {\n          background-color: var(--color2) !important;\n          color: white;\n          padding-top:25px;\n          padding-bottom:25px;\n        }\n        .jumbotron-title\n        {\n          color:var(--color5);\n        }\n        .jumbotron-button\n        {\n          color: white;\n          background-color: var(--color1);\n       }\n        .card\n        {\n          background-color: var(--color2) !important;\n          text-align: center;\n        }\n        .card-body\n        {\n          background-color: var(--color3);;\n        }\n        .card-button\n        {\n          color: var(--color5) !important;\n          background-color: var(--color1) !important;\n          font-weight: bold;\n        }\n        .card-title\n        {\n          color: var(--color5);\n          font-weight: var(--bold-text);\n          font-size: var(--big-text-size);\n         }\n        .card-text\n        {\n          color: white;\n          text-align: left;\n          font-size: var(--big-text-size);\n        }\n        .danger-card\n        {\n          background-color: yellow !important;\n          text-align: center;\n        }\n        .danger-card-body\n        {\n          background-color: yellow;\n        }\n        .danger-card-button\n        {\n          color: yellow !important;\n          background-color: red !important;\n          font-weight: bold;\n        }\n        .danger-card-title\n        {\n          color: red;\n          font-weight: var(--bold-text);\n          font-size: var(--big-text-size);\n         }\n        .danger-card-text\n        {\n          color: white;\n          text-align: left;\n          font-size: var(--big-text-size);\n        }\n        .tableHeading\n        {\n          color:var(--container-title-color);\n        }\n        .tableText\n        {\n          color:var(--container-text-color);\n          font-size: var(--big-text-size);\n        }\n       .vert-pad\n        {\n            padding-top:var(--vert-pad);;\n            padding-bottom:var(--vert-pad);;\n        }\n        .horz-pad\n        {\n            padding-left:var(--horz-pad);;\n            padding-right:var(--horz-pad);;\n        }\n        .big-text\n        {\n            font-size: var(--big-text-size);\n        }\n        .bold-text\n        {\n            font-weight: var(--bold-text);\n        }\n        .ui-slider\n        {\n            height: 90px;\n            background-color: var(--color1) !important;\n        }\n        .ui-slider .ui-slider-handle \n        {\n            height: 100px;\n            width: 100px;\n            background-color: var(--color5) !important;\n        }\n        .ui-dialog-titlebar-close \n        {\n            visibility: hidden;\n        }\n        input.inputLarger\n        {\n            transform: scale(3);\n            margin: 1px;\n        }\n",
-        "output": "str",
-        "x": 190,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b1fab3c6.1f34c",
-        "type": "subflow:8857082f.cfdaa8",
-        "z": "6a402d92.12d7c4",
-        "x": 200,
-        "y": 80,
-        "wires": [
-            [
-                "e205aa81.b2b958"
-            ]
-        ]
-    },
-    {
-        "id": "133517a3.6ba2b8",
-        "type": "subflow:188d93e1.8dcc1c",
-        "z": "6a402d92.12d7c4",
-        "name": "",
-        "x": 490,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "e205aa81.b2b958",
-        "type": "subflow:f07e020c.d4d43",
-        "z": "6a402d92.12d7c4",
-        "name": "",
-        "env": [],
-        "x": 350,
-        "y": 80,
-        "wires": [
-            [
-                "133517a3.6ba2b8"
-            ]
-        ]
-    },
-    {
-        "id": "8f14813b.bcdfc",
-        "type": "exec",
-        "z": "5f562f66.a301e",
-        "command": "pm2 restart red",
-        "addpay": false,
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "oldrc": false,
-        "name": "",
-        "x": 1000,
-        "y": 260,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "960991fa.0fafe",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Check Restart Setting",
-        "func": "if (msg.payload != 1) return null\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 760,
-        "y": 260,
-        "wires": [
-            [
-                "8f14813b.bcdfc"
-            ]
-        ]
-    },
-    {
-        "id": "8fd42733.128c98",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Filter Websocket MQTT like message",
-        "func": "var msg1 = null;\nvar msg2 = null\nvar mqttArray = msg.topic.split('/');\nif (mqttArray[3] == 'restartTray')\n{\n    msg2 = msg;\n}\nelse\n{\n    msg1 = msg;\n}\n\nreturn [msg1,msg2];",
-        "outputs": 2,
-        "noerr": 0,
-        "x": 230,
-        "y": 200,
-        "wires": [
-            [
-                "6c43015c.a827c"
-            ],
-            [
-                "225946b1.9e8b3a"
-            ]
-        ]
-    },
-    {
-        "id": "9256d95.2ffee28",
-        "type": "comment",
-        "z": "5f562f66.a301e",
-        "name": "Customization",
-        "info": " - Buffer size on Teensy Output\n - rfcomm port\n - code in Create Readings\n - code in Create Settings\n - websocket URL",
-        "x": 630,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "c0eddd92.1b41",
-        "type": "inject",
-        "z": "5f562f66.a301e",
-        "name": "Init",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "x": 90,
-        "y": 40,
-        "wires": [
-            [
-                "218e440b.fba8ac"
-            ]
-        ]
-    },
-    {
-        "id": "218e440b.fba8ac",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Cube Custom Info",
-        "func": "var cubeInfo = \n{\n    deviceType  : 'blinky-lite-cam',\n    name        : '01',\n};\nflow.set('cubeInfo', cubeInfo);\nreturn null;",
-        "outputs": 0,
-        "noerr": 0,
-        "x": 370,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "2635280b.22f548",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Make Pretty",
-        "func": "var filename = flow.get('cubeInfo').deviceType + '-' + flow.get('cubeInfo').name + '.json';\nreturn {topic: 'readFile', 'filename':filename};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 270,
-        "y": 340,
-        "wires": [
-            [
-                "163af492.5e952b"
-            ]
-        ]
-    },
-    {
-        "id": "6c43015c.a827c",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Filter MQTT",
-        "func": "var mqttArray = msg.topic.split('/');\nif (mqttArray[0] != global.get('project')) return null;\nif (mqttArray[1] != flow.get('cubeInfo').deviceType) return null;\nif (mqttArray[2] != flow.get('cubeInfo').name) return null;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 510,
-        "y": 140,
-        "wires": [
-            [
-                "7461da25.d86ac4"
-            ]
-        ]
-    },
-    {
-        "id": "225946b1.9e8b3a",
-        "type": "function",
-        "z": "5f562f66.a301e",
-        "name": "Filter MQTT",
-        "func": "var mqttArray = msg.topic.split('/');\nif (mqttArray[0] != global.get('project')) return null;\nif (mqttArray[1] != flow.get('cubeInfo').deviceType) return null;\nif (mqttArray[2] != flow.get('cubeInfo').name) return null;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 510,
-        "y": 260,
-        "wires": [
-            [
-                "960991fa.0fafe"
-            ]
-        ]
-    },
-    {
-        "id": "9e56a59.12b4158",
-        "type": "link out",
-        "z": "c4285970.3276d8",
-        "name": "Settings Out",
-        "links": [
-            "6c15c07a.68169"
-        ],
-        "x": 1155,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "c2b927f.87df7d8",
-        "type": "link out",
-        "z": "c4285970.3276d8",
-        "name": "Token Check",
-        "links": [
-            "3a74e83e.288018",
-            "65c2a6ff.a7b8f8"
-        ],
-        "x": 1155,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "bb2bf17e.0eeb8",
-        "type": "function",
-        "z": "c4285970.3276d8",
-        "name": "Send Token",
-        "func": "return {topic:'getJwtToken', payload:{topic:'getJwtToken', userID:msg.userID, token: msg.token}};\n",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 970,
-        "y": 160,
-        "wires": [
-            [
-                "c2b927f.87df7d8"
-            ]
-        ]
-    },
-    {
-        "id": "5da8e3d5.f40e0c",
-        "type": "JsonWebToken",
-        "z": "c4285970.3276d8",
-        "name": "get Token",
-        "tokenconfig": "144aea5f.fcbd96",
-        "x": 820,
-        "y": 160,
-        "wires": [
-            [
-                "bb2bf17e.0eeb8"
-            ]
-        ]
-    },
-    {
-        "id": "8f2c12d3.cfba4",
-        "type": "JsonWebToken",
-        "z": "c4285970.3276d8",
-        "name": "decrypt Token",
-        "tokenconfig": "144aea5f.fcbd96",
-        "x": 860,
-        "y": 80,
-        "wires": [
-            [
-                "179aeb8b.254ce4"
-            ]
-        ]
-    },
-    {
-        "id": "179aeb8b.254ce4",
-        "type": "function",
-        "z": "c4285970.3276d8",
-        "name": "Check Token",
-        "func": "if (Number(msg.token) == msg.userID)\n{\n    return [msg, {topic : 'acknowledge', payload:{topic:'settingAcknowledge', payload: 'Success!', userID : msg.userID}}]\n}\nreturn [null, {topic : 'acknowledge', payload:{topic:'settingAcknowledge', payload: 'Bad token', userID : msg.userID}}];",
-        "outputs": 2,
-        "noerr": 0,
-        "x": 1030,
-        "y": 80,
-        "wires": [
-            [
-                "9e56a59.12b4158"
-            ],
-            [
-                "c2b927f.87df7d8"
-            ]
-        ]
-    },
-    {
-        "id": "3868e942.844f96",
-        "type": "function",
-        "z": "c4285970.3276d8",
-        "name": "sendSettingToMqtt",
-        "func": "return {\n    topic   : msg.payload.mqttMessage.topic, \n    payload : msg.payload.mqttMessage.payload, \n    token   : msg.payload.token, \n    userID  : msg.payload.userID };\n",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 670,
-        "y": 80,
-        "wires": [
-            [
-                "8f2c12d3.cfba4"
-            ]
-        ]
-    },
-    {
-        "id": "6255e89b.eda558",
-        "type": "function",
-        "z": "c4285970.3276d8",
-        "name": "CheckLogin",
-        "func": "if (global.get('settingsPassword') == 'NULL')\n{\n    return [null, {topic:'getJwtToken',payload:msg.payload.userID, userID : msg.payload.userID}];    \n}\nif (msg.payload.payload.loginPassword != global.get('settingsPassword'))\n{\n    return [{topic:'getJwtToken', payload:{topic:'getJwtToken', userID:msg.payload.userID, token: null}}, null];\n}\nreturn [null, {topic:'getJwtToken',payload:msg.payload.userID, userID : msg.payload.userID}];",
-        "outputs": 2,
-        "noerr": 0,
-        "x": 650,
-        "y": 140,
-        "wires": [
-            [
-                "c2b927f.87df7d8"
-            ],
-            [
-                "5da8e3d5.f40e0c"
-            ]
-        ]
-    },
-    {
-        "id": "d325c712.5eb1c8",
-        "type": "switch",
-        "z": "c4285970.3276d8",
-        "name": "",
-        "property": "payload.topic",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "sendSettingToMqtt",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "getJwtToken",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "sendTakeImageToMqtt",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 3,
-        "x": 490,
-        "y": 80,
-        "wires": [
-            [
-                "3868e942.844f96"
-            ],
-            [
-                "6255e89b.eda558"
-            ],
-            [
-                "e0331b1d.cb6a08"
-            ]
-        ]
-    },
-    {
-        "id": "c78198ee.1c5e38",
-        "type": "json",
-        "z": "c4285970.3276d8",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 370,
-        "y": 80,
-        "wires": [
-            [
-                "d325c712.5eb1c8"
-            ]
-        ]
-    },
-    {
-        "id": "c43545a1.5deb28",
-        "type": "websocket in",
-        "z": "c4285970.3276d8",
-        "name": "/websocket",
-        "server": "44b51478.9c022c",
-        "client": "",
-        "x": 100,
-        "y": 80,
-        "wires": [
-            [
-                "c78198ee.1c5e38"
-            ]
-        ]
     },
     {
         "id": "71ce0943.81bf18",
         "type": "function",
         "z": "c4285970.3276d8",
         "name": "Set Name And Device Type",
-        "func": "msg.payload['script'] = {};\nmsg.payload['script']['name'] = '01'\nmsg.payload['script']['deviceType'] = 'blinky-lite-cam';\nmsg.payload['script']['project'] = global.get('project');\nreturn msg;\n",
+        "func": "msg.payload['script'] = {};\nmsg.payload['script']['name'] = msg.payload.name\nmsg.payload['script']['deviceType'] = 'blinky-webcam';\nmsg.payload['script']['project'] = global.get('project');\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 400,
         "y": 380,
         "wires": [
@@ -971,7 +267,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "Blinky Lite Cam {{{payload.script.name}}}",
+        "template": "Blinky WebCam {{{payload.script.name}}}",
         "output": "str",
         "x": 340,
         "y": 460,
@@ -982,15 +278,6 @@
         ]
     },
     {
-        "id": "f078068d.c90bc8",
-        "type": "subflow:6a402d92.12d7c4",
-        "z": "c4285970.3276d8",
-        "name": "",
-        "x": 1150,
-        "y": 500,
-        "wires": []
-    },
-    {
         "id": "c98976c.3996888",
         "type": "template",
         "z": "c4285970.3276d8",
@@ -999,13 +286,13 @@
         "fieldType": "msg",
         "format": "javascript",
         "syntax": "mustache",
-        "template": "// Global Javascript\n        var restfulDevice = \n        {\n            deviceType  : '{{{payload.script.deviceType}}}',\n            name        : '{{{payload.script.name}}}',\n            project     : '{{{payload.script.project}}}'\n        };\n        var mqttDevice = null;\n        var device = null;\n        var editingConfig = false;\n        var snapshotViewShowing = true;\n\n        var archiveRequestList = [];\n        var archiveList = [];\n\n        useWebSockets(true);\n        function onDocumentReady()\n        {\n            enableConfig(false);\n            $('#configCardBody').hide();\n            toggleSnapshotView();\n            $('#configCardBody').hide();\n            $('#takeSnapShotButton').prop(\"disabled\", true);\n        }\n        function onWebSocketOpen()\n        {\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n//            console.log(msg);\n            switch(msg.topic)\n            {\n                case 'readings':\n                    if (msg.mqttDevice.name == restfulDevice.name)\n                    {\n                        heartbeat();\n                        device = msg.payload;\n                        mqttDevice = msg.mqttDevice;\n                        updateDmaReadings();\n                    }\n                    break;\n                case 'getArchiveValues':\n                    if (msg.userID == userID)\n                    {\n                        if ((msg.payload.device.deviceType == restfulDevice.deviceType) && (msg.payload.device.name == restfulDevice.name) )\n                            putArchiveValues(msg.payload);\n                    }\n                    break;\n                case 'getJwtToken':\n                    if (msg.userID == userID) loadJwtToken(msg);\n                    break;\n                case 'settingAcknowledge':\n                    if (msg.userID == userID)\n                    {\n                        if (msg.payload != 'Success!') acknowledgeDialog('Acknowledge', 'Setting', msg.payload);\n                    }\n                    break;\n                default:\n                // code block\n            }\n        }\n// Update Readings Javascript\n        function updateDmaReadings()\n        {\n            $('#linkQualityId').text(device.linkQuality.value);\n            $('#signalLevelId').text(device.signalLevel.value);\n            $('#snapshotTimeStamp').text(new Date(device.timeStamp).toLocaleString('en-SE', { timeZone: 'Europe/Stockholm' }));\n            if (device.takeImage.value == 0)\n            {\n                $('#takeSnapShotButton').prop(\"disabled\", false);\n            }\n            else\n            {\n                $('#takeSnapShotButton').prop(\"disabled\", true);\n            }\n\n            if(!editingConfig)\n            {\n                $('#rotSelect').val(device.config.rot.value.toString());\n                $('#rotEnable').prop(\"checked\", device.config.rot.enabled);\n                $('#effectsSelect').val(device.config.ifx.value.toString());\n                $('#effectsEnable').prop(\"checked\", device.config.ifx.enabled);\n                $('#exposureSelect').val(device.config.ex.value.toString());\n                $('#exposureEnable').prop(\"checked\", device.config.ex.enabled);\n                $('#awbSelect').val(device.config.awb.value.toString());\n                $('#awbEnable').prop(\"checked\", device.config.awb.enabled);\n                $('#mmSelect').val(device.config.mm.value.toString());\n                $('#mmEnable').prop(\"checked\", device.config.mm.enabled);\n                $('#shValue').val(device.config.sh.value.toString());\n                $('#shEnable').prop(\"checked\", device.config.sh.enabled);\n                $('#coValue').val(device.config.co.value.toString());\n                $('#coEnable').prop(\"checked\", device.config.co.enabled);\n                $('#brValue').val(device.config.br.value.toString());\n                $('#brEnable').prop(\"checked\", device.config.br.enabled);\n                $('#saValue').val(device.config.sa.value.toString());\n                $('#saEnable').prop(\"checked\", device.config.sa.enabled);\n                $('#ISOValue').val(device.config.ISO.value.toString());\n                $('#ISOEnable').prop(\"checked\", device.config.ISO.enabled);\n                $('#evValue').val(device.config.ev.value.toString());\n                $('#evEnable').prop(\"checked\", device.config.ev.enabled);\n                $('#ssValue').val(device.config.ss.value.toString());\n                $('#ssEnable').prop(\"checked\", device.config.ss.enabled);\n                $('#cfxValue').val(device.config.cfx.value.toString());\n                $('#cfxEnable').prop(\"checked\", device.config.cfx.enabled);\n            }\n\n            \n            $('#raspistillImg').attr('src','img/raspistill/' + device.deviceType + '-' + device.name + '.jpg' +'?t=' + device.timeStamp.toString() );\n            $('#raspistillImgLink').attr('href','img/raspistill/' + device.deviceType + '-' + device.name + '.jpg' +'?t=' + device.timeStamp.toString() );\n\n        }\n        function enableConfig(enable)\n        {\n            $('#rotSelect').prop(\"disabled\", !enable);\n            $('#rotEnable').prop(\"disabled\", !enable);\n            $('#effectsSelect').prop(\"disabled\", !enable);\n            $('#effectsEnable').prop(\"disabled\", !enable);\n            $('#exposureSelect').prop(\"disabled\", !enable);\n            $('#exposureEnable').prop(\"disabled\", !enable);\n            $('#awbSelect').prop(\"disabled\", !enable);\n            $('#awbEnable').prop(\"disabled\", !enable);\n            $('#mmSelect').prop(\"disabled\", !enable);\n            $('#mmEnable').prop(\"disabled\", !enable);\n            $('#shValue').prop(\"disabled\", !enable);\n            $('#shEnable').prop(\"disabled\", !enable);\n            $('#coValue').prop(\"disabled\", !enable);\n            $('#coEnable').prop(\"disabled\", !enable);\n            $('#brValue').prop(\"disabled\", !enable);\n            $('#brEnable').prop(\"disabled\", !enable);\n            $('#saValue').prop(\"disabled\", !enable);\n            $('#saEnable').prop(\"disabled\", !enable);\n            $('#ISOValue').prop(\"disabled\", !enable);\n            $('#ISOEnable').prop(\"disabled\", !enable);\n            $('#evValue').prop(\"disabled\", !enable);\n            $('#evEnable').prop(\"disabled\", !enable);\n            $('#ssValue').prop(\"disabled\", !enable);\n            $('#ssEnable').prop(\"disabled\", !enable);\n            $('#cfxValue').prop(\"disabled\", !enable);\n            $('#cfxEnable').prop(\"disabled\", !enable);\n           if ( enable)\n            {\n                $('#editConfigButton').text('Stop Editing');\n                $('#configCardBody').show();\n            }\n            else\n            {\n                $('#editConfigButton').text('Configuration');\n                $('#configCardBody').hide();\n            }\n\n        }\n        function editConfig()\n        {\n            editingConfig = !editingConfig;\n            enableConfig(editingConfig);\n            if (!editingConfig)\n            {\n                device.config.rot.value = $('#rotSelect').val();\n                device.config.rot.enabled = $('#rotEnable').prop(\"checked\");\n                device.config.ifx.value = $('#effectsSelect').val();\n                device.config.ifx.enabled = $('#effectsEnable').prop(\"checked\");\n                device.config.ex.value = $('#exposureSelect').val();\n                device.config.ex.enabled = $('#exposureEnable').prop(\"checked\");\n                device.config.awb.value = $('#awbSelect').val();\n                device.config.awb.enabled = $('#awbEnable').prop(\"checked\");\n                device.config.mm.value = $('#mmSelect').val();\n                device.config.mm.enabled = $('#mmEnable').prop(\"checked\");\n                device.config.sh.value = Number($('#shValue').val());\n                device.config.sh.enabled = $('#shEnable').prop(\"checked\");\n                device.config.co.value = Number($('#coValue').val());\n                device.config.co.enabled = $('#coEnable').prop(\"checked\");\n                device.config.br.value = Number($('#brValue').val());\n                device.config.br.enabled = $('#brEnable').prop(\"checked\");\n                device.config.sa.value = Number($('#saValue').val());\n                device.config.sa.enabled = $('#saEnable').prop(\"checked\");\n                device.config.ISO.value = Number($('#ISOValue').val());\n                device.config.ISO.enabled = $('#ISOEnable').prop(\"checked\");\n                device.config.ev.value = Number($('#evValue').val());\n                device.config.ev.enabled = $('#evEnable').prop(\"checked\");\n                device.config.ss.value = Number($('#ssValue').val());\n                device.config.ss.enabled = $('#ssEnable').prop(\"checked\");\n                device.config.cfx.value = $('#cfxValue').val();\n                device.config.cfx.enabled = $('#cfxEnable').prop(\"checked\");\n\n                var mqttMessage = \n                {\n                    topic   : mqttDevice.project + '/' +  mqttDevice.deviceType + '/' +  mqttDevice.name + '/setting',\n                    payload :  device\n                };\n                var socketMessage = \n                {\n                    topic       : 'sendSettingToMqtt',\n                    mqttMessage : mqttMessage,\n                    token       : jwtToken,\n                    userID      : userID\n                };\n                sendWebSocketMessageObject({topic : 'sendTakeImageToMqtt', mqttMessage : mqttMessage, token : jwtToken, userID : userID});\n            }\n        }\n        function toggleSnapshotView()\n        {\n            snapshotViewShowing = !snapshotViewShowing;\n            if(snapshotViewShowing)\n            {\n                $('#snapshotCardBody').show();\n            }\n            else\n            {\n                $('#snapshotCardBody').hide();\n            }\n\n        }\n        function takeSnapShot()\n        {\n            device.takeImage.value = 1;\n            var mqttMessage = \n            {\n                topic   : mqttDevice.project + '/' +  mqttDevice.deviceType + '/' +  mqttDevice.name + '/setting',\n                payload :  device\n            };\n            var socketMessage = \n            {\n                topic       : 'sendSettingToMqtt',\n                mqttMessage : mqttMessage,\n                token       : jwtToken,\n                userID      : userID\n            };\n            sendWebSocketMessageObject({topic : 'sendTakeImageToMqtt', mqttMessage : mqttMessage, token : jwtToken, userID : userID});\n            $('#takeSnapShotButton').prop(\"disabled\", true);\n            \n        }\n",
+        "template": "// Global Javascript\n        var restfulDevice = \n        {\n            deviceType  : '{{{payload.script.deviceType}}}',\n            name        : '{{{payload.script.name}}}',\n            project     : '{{{payload.script.project}}}'\n        };\n        var mqttDevice = null;\n        var device = null;\n        var pingInterval = 5000;\n        var lastPing = 0;\n        var editingConfig = false;\n        var snapshotViewShowing = true;\n\n        useWebSockets(true);\n        function onDocumentReady()\n        {\n            setRemoteApp(false);\n            if (remoteApp)\n            {\n                getCreds();\n                setInterval(function(){getCreds();}, 1000);\n            }\n            else\n            {\n                $('#userCardId').hide();\n            }\n            setInterval(function()\n            {\n                var now = new Date().getTime();\n                if ((now - lastPing) > pingInterval)\n                {\n                    lastPing = now;\n                    var actionMsg = \n                        {\n                            topic   : restfulDevice.project + '/' +  restfulDevice.deviceType + '/' +  restfulDevice.name + '/ping',\n                            payload : true\n                        };\n                    sendActionMsg('ping', 'ping', actionMsg);\n               }\n            }, 1000);\n            enableConfig(false);\n            $('#configCardBody').hide();\n            toggleSnapshotView();\n            $('#configCardBody').hide();\n            $('#takeSnapShotButton').prop(\"disabled\", true);\n        }\n        function onWebSocketOpen()\n        {\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n//            console.log(msg);\n            switch(msg.topic)\n            {\n                case 'readings':\n                    if ((msg.mqttDevice.name == restfulDevice.name) && (msg.mqttDevice.deviceType == restfulDevice.deviceType)  && (msg.mqttDevice.project == restfulDevice.project) )\n                    {\n                        lastPing = new Date().getTime();\n                        heartbeat();\n                        device = JSON.parse(pako.inflate(msg.payload, { to: 'string' }));\n                        mqttDevice = msg.mqttDevice;\n                        updateDmaReadings();\n                    }\n                    break;\n                case 'readDatabase':\n                    if (msg.userID == userID)\n                    {\n                        if ((msg.payload.device.deviceType == restfulDevice.deviceType) && (msg.payload.device.name == restfulDevice.name) )\n                            putArchiveValues(msg.payload);\n                    }\n                    break;\n                case 'renew':\n                    if (msg.userID == userID)\n                    {\n                        updateCookie(msg);\n                    }\n                    break;\n                case 'permissionError':\n                    if (msg.userID == userID)\n                    {\n                        acknowledgeDialog('Permission', 'Error', msg.payload);\n                    }\n                    break;\n                case 'loginExpired':\n                    if (msg.userID == userID)\n                    {\n                       location.reload();\n                    }\n                    break;\n                default:\n                    break;\n            }\n        }\n        function sendSetting()\n        {\n            var actionMsg = \n                {\n                    topic   : mqttDevice.project + '/' +  mqttDevice.deviceType + '/' +  mqttDevice.name + '/setting',\n                    payload : pako.deflate(JSON.stringify(device))\n                };\n            sendActionMsg('setting','setting',actionMsg);\n       }\n        function setScalarValue(settingValue, attrName)\n        {\n            var settingAttr = device[attrName];\n            if ( (settingAttr.alarm.limits.lolo <= settingValue) && (settingValue <= settingAttr.alarm.limits.hihi) )\n            {\n                settingAttr.value = settingValue;\n                sendSetting();\n            } \n            else\n            {\n                acknowledgeDialog('Acknowledge', 'Error', 'Entry outside range! (' + settingAttr.alarm.limits.lolo.toString() + '-' + settingAttr.alarm.limits.hihi.toString() + ' ' + settingAttr.unit);\n            }\n        }\n        function reset(actionFlag)\n        {\n            var headerText = 'Warning';\n            var title = 'Resetting Tray';\n            var text = 'I hope you know what you are doing.';\n            var buttonTexts = ['Reset', 'Cancel'];\n            var buttonFunctions = \n            [\n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                    setScalarValue(actionFlag, 'reset');\n                 }, \n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                }\n            ];\n            if (actionFlag == 2)\n            {\n                title = 'Rebooting Tray';\n                buttonTexts[0] = 'Reboot';\n            }\n            optionDialog(headerText, title, text, buttonTexts, buttonFunctions);\n        }\n// Update Readings Javascript\n        function updateDmaReadings()\n        {\n            $('#linkQualityId').text(device.linkQuality.value);\n            $('#signalLevelId').text(device.signalLevel.value);\n            $('#snapshotTimeStamp').text(new Date(device.timeStamp).toLocaleString('en-SE', { timeZone: 'Europe/Stockholm' }));\n            if (device.takeImage.value == 0)\n            {\n                $('#takeSnapShotButton').prop(\"disabled\", false);\n            }\n            else\n            {\n                $('#takeSnapShotButton').prop(\"disabled\", true);\n            }\n\n            if(!editingConfig)\n            {\n                $('#rotSelect').val(device.config.rot.value.toString());\n                $('#rotEnable').prop(\"checked\", device.config.rot.enabled);\n                $('#effectsSelect').val(device.config.ifx.value.toString());\n                $('#effectsEnable').prop(\"checked\", device.config.ifx.enabled);\n                $('#exposureSelect').val(device.config.ex.value.toString());\n                $('#exposureEnable').prop(\"checked\", device.config.ex.enabled);\n                $('#awbSelect').val(device.config.awb.value.toString());\n                $('#awbEnable').prop(\"checked\", device.config.awb.enabled);\n                $('#mmSelect').val(device.config.mm.value.toString());\n                $('#mmEnable').prop(\"checked\", device.config.mm.enabled);\n                $('#shValue').val(device.config.sh.value.toString());\n                $('#shEnable').prop(\"checked\", device.config.sh.enabled);\n                $('#coValue').val(device.config.co.value.toString());\n                $('#coEnable').prop(\"checked\", device.config.co.enabled);\n                $('#brValue').val(device.config.br.value.toString());\n                $('#brEnable').prop(\"checked\", device.config.br.enabled);\n                $('#saValue').val(device.config.sa.value.toString());\n                $('#saEnable').prop(\"checked\", device.config.sa.enabled);\n                $('#ISOValue').val(device.config.ISO.value.toString());\n                $('#ISOEnable').prop(\"checked\", device.config.ISO.enabled);\n                $('#evValue').val(device.config.ev.value.toString());\n                $('#evEnable').prop(\"checked\", device.config.ev.enabled);\n                $('#ssValue').val(device.config.ss.value.toString());\n                $('#ssEnable').prop(\"checked\", device.config.ss.enabled);\n                $('#cfxValue').val(device.config.cfx.value.toString());\n                $('#cfxEnable').prop(\"checked\", device.config.cfx.enabled);\n            }\n\n            \n            $('#raspistillImg').attr('src','img/raspistill/' + device.deviceType + '-' + device.name + '.jpg' +'?t=' + device.timeStamp.toString() );\n            $('#raspistillImgLink').attr('href','img/raspistill/' + device.deviceType + '-' + device.name + '.jpg' +'?t=' + device.timeStamp.toString() );\n\n        }\n        function enableConfig(enable)\n        {\n            $('#rotSelect').prop(\"disabled\", !enable);\n            $('#rotEnable').prop(\"disabled\", !enable);\n            $('#effectsSelect').prop(\"disabled\", !enable);\n            $('#effectsEnable').prop(\"disabled\", !enable);\n            $('#exposureSelect').prop(\"disabled\", !enable);\n            $('#exposureEnable').prop(\"disabled\", !enable);\n            $('#awbSelect').prop(\"disabled\", !enable);\n            $('#awbEnable').prop(\"disabled\", !enable);\n            $('#mmSelect').prop(\"disabled\", !enable);\n            $('#mmEnable').prop(\"disabled\", !enable);\n            $('#shValue').prop(\"disabled\", !enable);\n            $('#shEnable').prop(\"disabled\", !enable);\n            $('#coValue').prop(\"disabled\", !enable);\n            $('#coEnable').prop(\"disabled\", !enable);\n            $('#brValue').prop(\"disabled\", !enable);\n            $('#brEnable').prop(\"disabled\", !enable);\n            $('#saValue').prop(\"disabled\", !enable);\n            $('#saEnable').prop(\"disabled\", !enable);\n            $('#ISOValue').prop(\"disabled\", !enable);\n            $('#ISOEnable').prop(\"disabled\", !enable);\n            $('#evValue').prop(\"disabled\", !enable);\n            $('#evEnable').prop(\"disabled\", !enable);\n            $('#ssValue').prop(\"disabled\", !enable);\n            $('#ssEnable').prop(\"disabled\", !enable);\n            $('#cfxValue').prop(\"disabled\", !enable);\n            $('#cfxEnable').prop(\"disabled\", !enable);\n           if ( enable)\n            {\n                $('#editConfigButton').text('Stop Editing');\n                $('#configCardBody').show();\n            }\n            else\n            {\n                $('#editConfigButton').text('Configuration');\n                $('#configCardBody').hide();\n            }\n\n        }\n        function editConfig()\n        {\n            editingConfig = !editingConfig;\n            enableConfig(editingConfig);\n            if (!editingConfig)\n            {\n                device.config.rot.value = $('#rotSelect').val();\n                device.config.rot.enabled = $('#rotEnable').prop(\"checked\");\n                device.config.ifx.value = $('#effectsSelect').val();\n                device.config.ifx.enabled = $('#effectsEnable').prop(\"checked\");\n                device.config.ex.value = $('#exposureSelect').val();\n                device.config.ex.enabled = $('#exposureEnable').prop(\"checked\");\n                device.config.awb.value = $('#awbSelect').val();\n                device.config.awb.enabled = $('#awbEnable').prop(\"checked\");\n                device.config.mm.value = $('#mmSelect').val();\n                device.config.mm.enabled = $('#mmEnable').prop(\"checked\");\n                device.config.sh.value = Number($('#shValue').val());\n                device.config.sh.enabled = $('#shEnable').prop(\"checked\");\n                device.config.co.value = Number($('#coValue').val());\n                device.config.co.enabled = $('#coEnable').prop(\"checked\");\n                device.config.br.value = Number($('#brValue').val());\n                device.config.br.enabled = $('#brEnable').prop(\"checked\");\n                device.config.sa.value = Number($('#saValue').val());\n                device.config.sa.enabled = $('#saEnable').prop(\"checked\");\n                device.config.ISO.value = Number($('#ISOValue').val());\n                device.config.ISO.enabled = $('#ISOEnable').prop(\"checked\");\n                device.config.ev.value = Number($('#evValue').val());\n                device.config.ev.enabled = $('#evEnable').prop(\"checked\");\n                device.config.ss.value = Number($('#ssValue').val());\n                device.config.ss.enabled = $('#ssEnable').prop(\"checked\");\n                device.config.cfx.value = $('#cfxValue').val();\n                device.config.cfx.enabled = $('#cfxEnable').prop(\"checked\");\n\n                sendSetting();\n            }\n        }\n        function toggleSnapshotView()\n        {\n            snapshotViewShowing = !snapshotViewShowing;\n            if(snapshotViewShowing)\n            {\n                $('#snapshotCardBody').show();\n            }\n            else\n            {\n                $('#snapshotCardBody').hide();\n            }\n\n        }\n        function takeSnapShot()\n        {\n            device.takeImage.value = 1;\n            sendSetting();\n            $('#takeSnapShotButton').prop(\"disabled\", true);\n            \n        }\n",
         "output": "str",
         "x": 670,
         "y": 380,
         "wires": [
             [
-                "da5b4a1e.c62d78"
+                "2de9d253.06695e"
             ]
         ]
     },
@@ -1018,10 +305,10 @@
         "fieldType": "msg",
         "format": "javascript",
         "syntax": "mustache",
-        "template": "{{{payload.script.global}}}\n{{{{payload.script.editDevice}}}\n{{{payload.script.dangerZone}}}\n",
+        "template": "{{{payload.script.global}}}\n{{{{payload.script.editDevice}}}\n{{{payload.script.user}}}\n",
         "output": "str",
         "x": 660,
-        "y": 500,
+        "y": 460,
         "wires": [
             [
                 "7fef0c19.4ed014"
@@ -1029,179 +316,15 @@
         ]
     },
     {
-        "id": "450b0136.7ccbd",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "body",
-        "field": "payload.body",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "    <div width=\"100%\">\n        <div class='row' style='padding-bottom: 10px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.snapshot}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 10px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.config}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 10px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.wifimon}}}\n            </div>\n        </div>\n    </div>\n",
-        "output": "str",
-        "x": 970,
-        "y": 500,
-        "wires": [
-            [
-                "f078068d.c90bc8"
-            ]
-        ]
-    },
-    {
-        "id": "e2fa40e5.9c393",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "script.dangerZone",
-        "field": "payload.script.dangerZone",
-        "fieldType": "msg",
-        "format": "javascript",
-        "syntax": "mustache",
-        "template": "// dangerZone JavaScript\n        function restartTray()\n        {\n            optionDialog('Danger! Will Robinson, Danger!', 'Restart Tray', 'This should not be done lightly', ['Reset Tray','Cancel'], [function (){restartTrayButtonPress();}, function (){$( \"#optionDialog\" ).dialog( \"close\" );}]);\n        }\n        function restartTrayButtonPress()\n        {\n            $( \"#optionDialog\" ).dialog( \"close\" );\n            var mqttMessage = \n            {\n                topic   : restfulDevice.project + '/' +  restfulDevice.deviceType + '/' +  restfulDevice.name + '/restartTray',\n                payload :  1\n            };\n            checkLogin(sendSettingToMqtt, mqttMessage);\n        }\n",
-        "output": "str",
-        "x": 690,
-        "y": 460,
-        "wires": [
-            [
-                "c1034be9.37f0a8"
-            ]
-        ]
-    },
-    {
-        "id": "45e607d2.0f0d38",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "html.dangerZone",
-        "field": "payload.html.dangerZone",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "                <div class='danger-card'>\n                    <div class='row'>\n                        <div class='col-md-2'>\n                        </div>\n                        <div class='col-md-8'>\n                            <p class='danger-card-title'>Danger Zone</p>\n                         </div>\n                        <div class='col-md-2'>\n                        </div>\n                    </div>\n                    <div class='danger-card-body' align=\"center\">\n                        <div class='row'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='100%' align=\"center\">\n                                        <button class='btn danger-card-button big-text' id=\"restartTrayButton\" onclick=\"restartTray()\" >Restart Tray</button>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n",
-        "output": "str",
-        "x": 1010,
-        "y": 460,
-        "wires": [
-            [
-                "450b0136.7ccbd"
-            ]
-        ]
-    },
-    {
-        "id": "d3b167fa.414fa8",
-        "type": "inject",
-        "z": "3f2da72f.995ab8",
-        "name": "PROJECT",
-        "topic": "project",
-        "payload": "PROJECT",
-        "payloadType": "env",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "x": 110,
-        "y": 80,
-        "wires": [
-            [
-                "5497633f.4a758c"
-            ]
-        ]
-    },
-    {
-        "id": "8f82985c.1fa328",
-        "type": "inject",
-        "z": "3f2da72f.995ab8",
-        "name": "SETTINGSPASSWORD",
-        "topic": "settingsPassword",
-        "payload": "SETTINGSPASSWORD",
-        "payloadType": "env",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "x": 150,
-        "y": 140,
-        "wires": [
-            [
-                "5497633f.4a758c"
-            ]
-        ]
-    },
-    {
-        "id": "5497633f.4a758c",
-        "type": "function",
-        "z": "3f2da72f.995ab8",
-        "name": "Save global init",
-        "func": "global.set(msg.topic,msg.payload);\nreturn msg;",
-        "outputs": 0,
-        "noerr": 0,
-        "x": 360,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "d162777.1380788",
-        "type": "exec",
-        "z": "3f2da72f.995ab8",
-        "command": "iwconfig",
-        "addpay": false,
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "oldrc": false,
-        "name": "",
-        "x": 280,
-        "y": 220,
-        "wires": [
-            [
-                "adf1efae.e4e0f"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "77ae9cee.d460f4",
-        "type": "inject",
-        "z": "3f2da72f.995ab8",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "5",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "x": 120,
-        "y": 220,
-        "wires": [
-            [
-                "d162777.1380788"
-            ]
-        ]
-    },
-    {
-        "id": "adf1efae.e4e0f",
-        "type": "function",
-        "z": "3f2da72f.995ab8",
-        "name": "Get Signal Quality",
-        "func": "var info = msg.payload;\nvar linkStartIndex  = info.indexOf('Link Quality=');\nvar levelStartIndex = info.indexOf('Signal level=');\nvar linkStopIndex   = info.indexOf('/70');\nvar levelStopIndex   = info.lastIndexOf('dBm');\nvar linkQuality = Number(info.substring(linkStartIndex + 13, linkStopIndex));\nvar signalLevel =  Number(info.substring(levelStartIndex + 13, levelStopIndex - 1));\nvar ssid = info.substring(info.indexOf('ESSID') + 7);\nssid = ssid.substring(0,ssid.indexOf('\"'));\nvar val = {linkQuality : linkQuality, signalLevel: signalLevel, ssid:ssid};\nglobal.set('linkQuality',linkQuality);\nglobal.set('signalLevel', signalLevel);\nglobal.set('ssid', ssid);\nreturn {topic :'test',payload : val};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 460,
-        "y": 220,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "70be1872.dfaf48",
         "type": "http in",
         "z": "c4285970.3276d8",
-        "name": "/",
-        "url": "/",
+        "name": "/blinky-webcam",
+        "url": "/blinky-webcam",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 130,
+        "x": 160,
         "y": 380,
         "wires": [
             [
@@ -1233,37 +356,27 @@
         "type": "inject",
         "z": "5f562f66.a301e",
         "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "repeat": "1",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "5",
         "x": 130,
-        "y": 440,
+        "y": 520,
         "wires": [
             [
                 "4e5c46c5.5583d8"
-            ]
-        ]
-    },
-    {
-        "id": "b6fcc866.328488",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "html.wifimon",
-        "field": "payload.html.wifimon",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "<!-- Dashboard HTML -->\n                <div class='card'>\n                    <p class='card-title'>WiFi Connection</p>\n                    <div class='card-body' align=\"center\">\n                        <div class='row'  style='padding-top: 0px;'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Device Update</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <img src='/img/heartRed.png' id='heartBeatID' width='100px' height='100px'/>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Signal Level (dBm)</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text' id='signalLevelId' >-100</span>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Link Quality (/70)</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text' id='linkQualityId' >-1</span>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n",
-        "output": "str",
-        "x": 990,
-        "y": 420,
-        "wires": [
-            [
-                "45e607d2.0f0d38"
             ]
         ]
     },
@@ -1278,8 +391,8 @@
         "timer": "",
         "oldrc": false,
         "name": "raspistill",
-        "x": 580,
-        "y": 400,
+        "x": 380,
+        "y": 460,
         "wires": [
             [
                 "f8373209.33156"
@@ -1293,36 +406,20 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Prep raspistill command",
-        "func": "var imageMsg = null;\nvar noImageMsg = null;\nvar device = flow.get('device');\nvar cubeInfo = flow.get('cubeInfo');\nif (device.takeImage.value == 1)\n{\n    var cmd = ' -o html-static/img/raspistill/';\n    cmd = cmd + cubeInfo.deviceType + '-' + cubeInfo.name + '.jpg';\n    if (device.config.rot.enabled) cmd = cmd + ' -rot ' + device.config.rot.value.toString();\n    if (device.config.t.enabled)   cmd = cmd + ' -t '   + device.config.t.value.toString();\n    if (device.config.h.enabled)   cmd = cmd + ' -h '   + device.config.h.value.toString();\n    if (device.config.w.enabled)   cmd = cmd + ' -w '   + device.config.w.value.toString();\n    if (device.config.ifx.enabled) cmd = cmd + ' -ifx ' + device.config.ifx.value.toString();\n    if (device.config.ex.enabled)  cmd = cmd + ' -ex '  + device.config.ex.value.toString();\n    if (device.config.awb.enabled) cmd = cmd + ' -awb ' + device.config.awb.value.toString();\n    if (device.config.mm.enabled)  cmd = cmd + ' -mm '  + device.config.mm.value.toString();\n    if (device.config.sh.enabled)  cmd = cmd + ' -sh '  + device.config.sh.value.toString();\n    if (device.config.co.enabled)  cmd = cmd + ' -co '  + device.config.co.value.toString();\n    if (device.config.br.enabled)  cmd = cmd + ' -br '  + device.config.br.value.toString();\n    if (device.config.sa.enabled)  cmd = cmd + ' -sa '  + device.config.sa.value.toString();\n    if (device.config.ISO.enabled) cmd = cmd + ' -ISO ' + device.config.ISO.value.toString();\n    if (device.config.ev.enabled)  cmd = cmd + ' -ev '  + device.config.ev.value.toString();\n    if (device.config.ss.enabled)  cmd = cmd + ' -ss '  + device.config.ss.value.toString();\n    if (device.config.cfx.enabled) cmd = cmd + ' -cfx ' + device.config.cfx.value.toString();\n    imageMsg = {topic : 'takeImage', payload : cmd};\n}\nelse\n{\n    noImageMsg = {topic : 'noImage', payload : device};\n}\nreturn [imageMsg,noImageMsg];\n",
+        "func": "var imageMsg = null;\nvar noImageMsg = null;\nvar device = flow.get('device');\nif (device.takeImage.value == 1)\n{\n    var cmd = ' -o html-static/img/raspistill/';\n    cmd = cmd + device.deviceType + '-' + device.name + '.jpg';\n    if (device.config.rot.enabled) cmd = cmd + ' -rot ' + device.config.rot.value.toString();\n    if (device.config.t.enabled)   cmd = cmd + ' -t '   + device.config.t.value.toString();\n    if (device.config.h.enabled)   cmd = cmd + ' -h '   + device.config.h.value.toString();\n    if (device.config.w.enabled)   cmd = cmd + ' -w '   + device.config.w.value.toString();\n    if (device.config.ifx.enabled) cmd = cmd + ' -ifx ' + device.config.ifx.value.toString();\n    if (device.config.ex.enabled)  cmd = cmd + ' -ex '  + device.config.ex.value.toString();\n    if (device.config.awb.enabled) cmd = cmd + ' -awb ' + device.config.awb.value.toString();\n    if (device.config.mm.enabled)  cmd = cmd + ' -mm '  + device.config.mm.value.toString();\n    if (device.config.sh.enabled)  cmd = cmd + ' -sh '  + device.config.sh.value.toString();\n    if (device.config.co.enabled)  cmd = cmd + ' -co '  + device.config.co.value.toString();\n    if (device.config.br.enabled)  cmd = cmd + ' -br '  + device.config.br.value.toString();\n    if (device.config.sa.enabled)  cmd = cmd + ' -sa '  + device.config.sa.value.toString();\n    if (device.config.ISO.enabled) cmd = cmd + ' -ISO ' + device.config.ISO.value.toString();\n    if (device.config.ev.enabled)  cmd = cmd + ' -ev '  + device.config.ev.value.toString();\n    if (device.config.ss.enabled)  cmd = cmd + ' -ss '  + device.config.ss.value.toString();\n    if (device.config.cfx.enabled) cmd = cmd + ' -cfx ' + device.config.cfx.value.toString();\n    imageMsg = {topic : 'takeImage', payload : cmd};\n}\nelse\n{\n    noImageMsg = {topic : 'noImage', payload : device};\n}\nreturn [imageMsg,noImageMsg];\n",
         "outputs": 2,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 330,
-        "y": 440,
+        "y": 520,
         "wires": [
             [
                 "84a9b3c6.82737"
             ],
             [
                 "1183f5a4.d5d21a"
-            ]
-        ]
-    },
-    {
-        "id": "da5b4a1e.c62d78",
-        "type": "template",
-        "z": "c4285970.3276d8",
-        "name": "script.editDevice",
-        "field": "payload.script.editDevice",
-        "fieldType": "msg",
-        "format": "javascript",
-        "syntax": "mustache",
-        "template": "// Edit Temp JavaScript\n       $( function() \n        {\n            $( \"#editDeviceDialog\" ).dialog(\n                {\n//                    closeOnEscape: false,\n//                    open: function(event, ui) {$(\".ui-dialog-titlebar-close\", ui.dialog | ui).hide();},\n                    width:    640,\n                    autoOpen: false,\n                    buttons:\n                    [\n                        {\n                            text: \"Set\",\n                            click: function() {setDevice(); $( this ).dialog( \"close\" );},\n                            showText: false\n                        },\n                        {\n                            text: \"Cancel\",\n                            click: function() \n                            {\n                                $( this ).dialog( \"close\" ); \n                            },\n                            showText: false\n                        }\n                    ]\n                });\n        } );\n        function editDevice(attrName)\n        {\n            $( \"#editDeviceDialog\" ).dialog( \"option\", \"title\", \"Edit\"); \n            editedAttribute = attrName;\n            $( \"#editDeviceDialogAttribute\").html(attrName);\n\n            var attr = device[attrName];\n            $( \"#loloAlarm\").val(attr.alarm.limits.lolo);\n            $( \"#lowAlarm\").val(attr.alarm.limits.low);\n            $( \"#highAlarm\").val(attr.alarm.limits.high);\n            $( \"#hihiAlarm\").val(attr.alarm.limits.hihi);\n            $( \"#notifyName\").val(attr.alarm.notify.name);\n            $( \"#notifyNumber\").val(attr.alarm.notify.number);\n\n            $( \"#editDeviceDialog\" ).dialog( \"open\" );\n        }\n        function setDevice()\n        {\n            var attr = device[editedAttribute];\n            if (isNaN($('#loloAlarm').val()) \n                || isNaN($('#lowAlarm').val()) \n                || isNaN($('#highAlarm').val()) \n                || isNaN($('#hihiAlarm').val()))\n            {\n                acknowledgeDialog('Error', 'Entry not a number!', editedAttribute);\n                editedAttribute = '';\n                return;\n            }\n            editedAttribute = '';\n\n            attr.alarm.limits.lolo = Number($( \"#loloAlarm\").val());\n            attr.alarm.limits.low = Number($( \"#lowAlarm\").val());\n            attr.alarm.limits.high = Number($( \"#highAlarm\").val());\n            attr.alarm.limits.hihi = Number($( \"#hihiAlarm\").val());\n            attr.alarm.notify.number =  $( \"#notifyNumber\").val();\n            attr.alarm.notify.name = $( \"#notifyName\").val();\n            var mqttMessage = \n            {\n                topic   : mqttDevice.project + '/' +  mqttDevice.deviceType + '/' +  mqttDevice.name + '/setting',\n                payload :  device\n            };\n            checkLogin(sendSettingToMqtt, mqttMessage);\n        }\n",
-        "output": "str",
-        "x": 680,
-        "y": 420,
-        "wires": [
-            [
-                "e2fa40e5.9c393"
             ]
         ]
     },
@@ -1338,7 +435,7 @@
         "template": "<!-- Dashboard HTML -->\n                <div class='card'>\n                    <div class='row'>\n                        <div class='col-md-2'>\n                        </div>\n                        <div class='col-md-8'>\n                            <button class='btn btn-block card-button big-text' id=\"toggleSnapshotViewButton\" onclick=\"toggleSnapshotView()\" >Snapshot</button>\n                         </div>\n                        <div class='col-md-2'>\n                        </div>\n                    </div>\n                    <div class='card-body' align=\"center\" id='snapshotCardBody'>\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <div class=\"container-fluid \" align=\"center\">\n                                <table width='800px'>\n                                    <tr>\n                                        <td>\n                                            <a href='img/raspistill/BlinkyLogo.png' target='_blank' id='raspistillImgLink' download>\n                                                <img src='img/raspistill/BlinkyLogo.png' id=\"raspistillImg\" width='800' height='600'/>\n                                            </a>\n                                        </td>\n                                    </tr>\n                                    <tr>\n                                        <td width='100%' align='center'>\n                                            <span  class='card-text' id='snapshotTimeStamp'>Blinky Time</span>\n                                        </td>\n                                    </tr>\n                                </table>\n                            </div>\n                        </div>\n                        <div class='row'>\n                            <div class='col-md-4'>\n                            </div>\n                            <div class='col-md-4'>\n                                <button class='btn btn-block card-button big-text' id=\"takeSnapShotButton\" onclick=\"takeSnapShot()\" >Snap</button>\n                             </div>\n                            <div class='col-md-4'>\n                            </div>\n                        </div>\n                   </div>\n                </div>\n",
         "output": "str",
         "x": 1000,
-        "y": 340,
+        "y": 380,
         "wires": [
             [
                 "65eb2d40.d0fcd4"
@@ -1350,42 +447,17 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Retrieve Device",
-        "func": "var newMsg = {topic:'device', payload:flow.get('device')};\nreturn newMsg;",
+        "func": "var newMsg = {topic:'device', payload:true};\nreturn newMsg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 760,
-        "y": 520,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 600,
         "wires": [
             [
-                "9115ea87.0ca208"
-            ]
-        ]
-    },
-    {
-        "id": "6d9f3651.5d58e8",
-        "type": "link out",
-        "z": "c4285970.3276d8",
-        "name": "TakeImageRequest",
-        "links": [
-            "6c15c07a.68169"
-        ],
-        "x": 835,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "e0331b1d.cb6a08",
-        "type": "function",
-        "z": "c4285970.3276d8",
-        "name": "sendImageSettingToMqtt",
-        "func": "return {\n    topic   : msg.payload.mqttMessage.topic, \n    payload : msg.payload.mqttMessage.payload, \n    token   : msg.payload.token, \n    userID  : msg.payload.userID };\n",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 690,
-        "y": 200,
-        "wires": [
-            [
-                "6d9f3651.5d58e8"
+                "76c6cbef.b885a4"
             ]
         ]
     },
@@ -1399,8 +471,8 @@
         "chunk": false,
         "sendError": false,
         "encoding": "none",
-        "x": 1020,
-        "y": 400,
+        "x": 740,
+        "y": 460,
         "wires": [
             []
         ]
@@ -1410,11 +482,14 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Get Image filename",
-        "func": "device = flow.get('device');\ndevice.takeImage.value = 0;\ndevice.timeStamp = new Date().getTime();\nvar filename = 'html-static/img/raspistill/' + flow.get('cubeInfo').deviceType + '-' + flow.get('cubeInfo').name + '.jpg';\nreturn {topic: 'readFile', 'filename':filename};",
+        "func": "device = flow.get('device');\ndevice.takeImage.value = 0;\ndevice.timeStamp = new Date().getTime();\nvar filename = 'html-static/img/raspistill/' + device.deviceType + '-' + device.name + '.jpg';\nreturn {topic: 'readFile', 'filename':filename};",
         "outputs": 1,
         "noerr": 0,
-        "x": 830,
-        "y": 400,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 460,
         "wires": [
             [
                 "5940639.346419c",
@@ -1434,10 +509,1257 @@
         "template": "<!-- Dashboard HTML -->\n                <div class='card'>\n                    <div class='row'>\n                        <div class='col-md-2'>\n                        </div>\n                        <div class='col-md-8'>\n                            <button class='btn btn-block card-button big-text' id=\"editConfigButton\" onclick=\"editConfig('')\" >Configuration</button>\n                         </div>\n                        <div class='col-md-2'>\n                        </div>\n                    </div>\n                    <div class='card-body' align=\"center\" id='configCardBody'>\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width=\"100%\">\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Rotation</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"rotSelect\">\n                                          <option value=\"0\">0</option>\n                                          <option value=\"90\">90</option>\n                                          <option value=\"180\">180</option>\n                                          <option value=\"270\">270</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"rotEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Effects</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"effectsSelect\">\n                                            <option value=\"none\">none</option>\n                                            <option value=\"negative\">negative</option>\n                                            <option value=\"solarise\">solarise</option>\n                                            <option value=\"sketch\">sketch</option>\n                                            <option value=\"denoise\">denoise</option>\n                                            <option value=\"emboss\">emboss</option>\n                                            <option value=\"oilpaint\">oilpaint</option>\n                                            <option value=\"hatch\">hatch</option>\n                                            <option value=\"gpen\">gpen</option>\n                                            <option value=\"pastel\">pastel</option>\n                                            <option value=\"watercolour\">water colour</option>\n                                            <option value=\"film\">film</option>\n                                            <option value=\"blur\">blur</option>\n                                            <option value=\"saturation\">saturation</option>\n                                            <option value=\"colourswap\">colour swap</option>\n                                            <option value=\"washedout\">washed out</option>\n                                            <option value=\"posterise\">posterise</option>\n                                            <option value=\"colourpoint\">colour point</option>\n                                            <option value=\"colourbalance\">colour balance</option>\n                                            <option value=\"cartoon\">cartoon</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"effectsEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Exposure</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"exposureSelect\">\n                                            <option value=\"off\">off</option>\n                                            <option value=\"auto\">auto</option>\n                                            <option value=\"night\">night</option>\n                                            <option value=\"nightpreview\">nightpreview</option>\n                                            <option value=\"backlight\">backlight</option>\n                                            <option value=\"spotlight\">spotlight</option>\n                                            <option value=\"sports\">sports</option>\n                                            <option value=\"snow\">snow</option>\n                                            <option value=\"beach\">beach</option>\n                                            <option value=\"verylong\">verylong</option>\n                                            <option value=\"fixedfps\">fixedfps</option>\n                                            <option value=\"antishake\">antishake</option>\n                                            <option value=\"fireworks\">fireworks</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"exposureEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >AWB</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"awbSelect\">\n                                            <option value=\"off\">off</option>\n                                            <option value=\"auto\">auto</option>\n                                            <option value=\"sun\">sun</option>\n                                            <option value=\"cloud\">cloud</option>\n                                            <option value=\"shade\">shade</option>\n                                            <option value=\"tungsten\">tungsten</option>\n                                            <option value=\"fluorescent\">fluorescent</option>\n                                            <option value=\"incandescent\">incandescent</option>\n                                            <option value=\"flash\">flash</option>\n                                            <option value=\"horizon\">horizon</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"awbEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Meter Modes</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"mmSelect\">\n                                            <option value=\"average\">average</option>\n                                            <option value=\"spot\">spot</option>\n                                            <option value=\"backlit\">backlit</option>\n                                            <option value=\"matrix\">matrix</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"mmEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Sharpness</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"shValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"shEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Contrast</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"coValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"coEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Brightness</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"brValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"brEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Saturation</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"saValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"saEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >ISO</span>\n                                        <span >(100 to 800)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"ISOValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"ISOEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >EV-Comp</span>\n                                        <span >(-10 to 10)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"evValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"evEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Shutter Speed</span>\n                                        <span >(uS 0 to 60000)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"ssValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"ssEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Color effect</span>\n                                        <span >(U:V)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"cfxValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"cfxEnable\"></td>\n                                </tr>\n\n                            </table>\n                        </div>\n                    </div>\n                </div>\n",
         "output": "str",
         "x": 990,
-        "y": 380,
+        "y": 420,
         "wires": [
             [
-                "b6fcc866.328488"
+                "ed792a6f.1bde88"
+            ]
+        ]
+    },
+    {
+        "id": "179cf2dc.cfb2dd",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Save device config in Memory",
+        "func": "msg.payload.reset.value = 0;\nmsg.payload.takeImage.value = 0;\nflow.set('device', msg.payload);\nflow.set('newSetting', 1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 40,
+        "wires": [
+            [
+                "ecc929a4.f52bf8"
+            ]
+        ]
+    },
+    {
+        "id": "f0637b87.76f858",
+        "type": "mqtt in",
+        "z": "5f562f66.a301e",
+        "name": "Subscribe DeviceA",
+        "topic": "$(MQTTDEVICEA)",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "244c3d5e.2550e2",
+        "nl": false,
+        "rap": false,
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "301d90f0.3cf19"
+            ]
+        ]
+    },
+    {
+        "id": "fdb67834.954ed8",
+        "type": "inject",
+        "z": "5f562f66.a301e",
+        "name": "deviceA",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "deviceA",
+        "payload": "MQTTDEVICEA",
+        "payloadType": "env",
+        "x": 120,
+        "y": 40,
+        "wires": [
+            [
+                "bcea2635.5d4c28"
+            ]
+        ]
+    },
+    {
+        "id": "5d267ca2.89cd04",
+        "type": "file in",
+        "z": "5f562f66.a301e",
+        "name": "Read device config",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 490,
+        "y": 40,
+        "wires": [
+            [
+                "fb4112b7.a74be"
+            ]
+        ]
+    },
+    {
+        "id": "fb4112b7.a74be",
+        "type": "json",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 650,
+        "y": 40,
+        "wires": [
+            [
+                "179cf2dc.cfb2dd"
+            ]
+        ]
+    },
+    {
+        "id": "bcea2635.5d4c28",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Init flow Variables",
+        "func": "var mqttSplit = msg.payload.split('/');\nvar deviceProps = {\n    project     :   mqttSplit[0],\n    deviceType  :   mqttSplit[1],\n    name        :   mqttSplit[2],\n    configFile  :   mqttSplit[1] + '-' + mqttSplit[2] + '.json'\n};\nflow.set('deviceProps',deviceProps);\nflow.set('newSetting',0);\nflow.set('bluetoothCheckSum',64);\nreturn {topic: 'readFile', 'filename':deviceProps.configFile};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 290,
+        "y": 40,
+        "wires": [
+            [
+                "5d267ca2.89cd04"
+            ]
+        ]
+    },
+    {
+        "id": "301d90f0.3cf19",
+        "type": "json",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 290,
+        "y": 140,
+        "wires": [
+            [
+                "397e756b.d98d0a"
+            ]
+        ]
+    },
+    {
+        "id": "397e756b.d98d0a",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Filter MQTT",
+        "func": "return {topic:msg.topic.split('/')[3], payload:msg.payload};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "b57df2cc.53b72"
+            ]
+        ]
+    },
+    {
+        "id": "b57df2cc.53b72",
+        "type": "switch",
+        "z": "5f562f66.a301e",
+        "name": "mqtt topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "setting",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ping",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 620,
+        "y": 140,
+        "wires": [
+            [
+                "1fcb4990.3e8c66"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8bc43e85.4310b",
+        "type": "file",
+        "z": "5f562f66.a301e",
+        "name": "Init Settings",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1430,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ecc929a4.f52bf8",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Make Pretty",
+        "func": "var jsonPretty = JSON.stringify(msg.payload,null,2);\nreturn {topic: msg.payload, payload:jsonPretty, 'filename':flow.get('deviceProps').configFile};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1250,
+        "y": 120,
+        "wires": [
+            [
+                "8bc43e85.4310b"
+            ]
+        ]
+    },
+    {
+        "id": "7797b621.bd8db8",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Settings Alarm Scan",
+        "func": "scalarAlarmScan(msg.payload, 'setting');\nflow.set('device', msg.payload); \nflow.set('newSetting', 1); \nreturn msg;\n\nfunction getActionArray(device, type, actionType)\n{\n    var actionArray = [];\n    var keys = Object.keys(device);\n    for (var ii = 0; ii < keys.length; ++ii)\n    {\n        if (device[keys[ii]].hasOwnProperty('type'))\n        {\n            if (device[keys[ii]].type == type)\n            {\n                if (device[keys[ii]].action == actionType)\n                {\n                    actionArray.push(device[keys[ii]]);\n                }\n            }\n        }\n    }\n    return actionArray;\n}\nfunction scalarAlarmScan(device, actionType)\n{\n    var actionArray = getActionArray(device, 'scalar', actionType);\n    if (actionArray.length > 0)\n    {\n        for (var ii = 0; ii < actionArray.length; ++ii)\n        {\n            actionArray[ii].alarm.value = 0;\n            if (!isNaN(actionArray[ii].value))\n            {\n                if (actionArray[ii].value < actionArray[ii].alarm.limits.low)  actionArray[ii].alarm.value = 1;\n                if (actionArray[ii].value < actionArray[ii].alarm.limits.lolo) actionArray[ii].alarm.value = 3;\n                if (actionArray[ii].value > actionArray[ii].alarm.limits.high) actionArray[ii].alarm.value = 2;\n                if (actionArray[ii].value > actionArray[ii].alarm.limits.hihi) actionArray[ii].alarm.value = 4;\n            }\n        }\n    }\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 120,
+        "wires": [
+            [
+                "ecc929a4.f52bf8",
+                "f1149704.3d7f88"
+            ]
+        ]
+    },
+    {
+        "id": "1ea7010c.d4ff6f",
+        "type": "link in",
+        "z": "5f562f66.a301e",
+        "name": "Device A web socket in",
+        "links": [
+            "bf551c25.4b208"
+        ],
+        "x": 55,
+        "y": 240,
+        "wires": [
+            [
+                "c6c30f60.2056c"
+            ]
+        ]
+    },
+    {
+        "id": "c6c30f60.2056c",
+        "type": "json",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "a2a01399.da058"
+            ]
+        ]
+    },
+    {
+        "id": "1fcb4990.3e8c66",
+        "type": "gzip",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "x": 770,
+        "y": 120,
+        "wires": [
+            [
+                "9a857087.80303"
+            ]
+        ]
+    },
+    {
+        "id": "9a857087.80303",
+        "type": "json",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 890,
+        "y": 120,
+        "wires": [
+            [
+                "7797b621.bd8db8"
+            ]
+        ]
+    },
+    {
+        "id": "f49b06e3.b65fc8",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Filter Websocket",
+        "func": "var inputDeviceProps = msg.payload.topic.split('/');\nvar deviceProps = flow.get('deviceProps')\nif (inputDeviceProps[0] != deviceProps.project) return null;\nif (inputDeviceProps[1] != deviceProps.deviceType) return null;\nif (inputDeviceProps[2] != deviceProps.name) return null;\nreturn {topic:msg.topic, payload:msg.payload.payload};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "b57df2cc.53b72"
+            ]
+        ]
+    },
+    {
+        "id": "a2a01399.da058",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Shift Msg",
+        "func": "return msg.payload;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 290,
+        "y": 240,
+        "wires": [
+            [
+                "f49b06e3.b65fc8"
+            ]
+        ]
+    },
+    {
+        "id": "66afc061.c34c9",
+        "type": "exec",
+        "z": "5f562f66.a301e",
+        "command": "pm2 restart red",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Restart",
+        "x": 1160,
+        "y": 200,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "85445c83.12966",
+        "type": "switch",
+        "z": "5f562f66.a301e",
+        "name": "Reset Tray",
+        "property": "payload.reset.value",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 970,
+        "y": 220,
+        "wires": [
+            [
+                "66afc061.c34c9"
+            ],
+            [
+                "f647b82b.626278"
+            ]
+        ]
+    },
+    {
+        "id": "f647b82b.626278",
+        "type": "exec",
+        "z": "5f562f66.a301e",
+        "command": "sudo reboot",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Reboot",
+        "x": 1160,
+        "y": 260,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f1149704.3d7f88",
+        "type": "delay",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 960,
+        "y": 180,
+        "wires": [
+            [
+                "85445c83.12966"
+            ]
+        ]
+    },
+    {
+        "id": "e34121df.1158",
+        "type": "template",
+        "z": "5076572e.f4d1e8",
+        "name": "navBar",
+        "field": "payload.navBar",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!-- navBar -->\n    <div class=\"jumbotron\" width=\"100%\">\n        <table width=\"100%\">\n            <tr>\n                <td style=\"text-align:left; vertical-align:middle;\"  width=\"20%\">\n                    <a href='https://www.blinky-lite.io/' target='_blank'>\n                        <img src=\"/img/BlinkyLogo.gif\" height=\"75px\"/>\n                    </a>                \n                </td>\n                <td width=\"60%\" style=\"text-align:center; vertical-align:middle;\">\n                    <h1 class=\"jumbotron-title big-text bold-text\">\n                        <img src=\"/img/{{{payload.navBarIcon}}}\" height=\"75px\" style=\"padding-right:20px;\"/><span>{{{payload.title}}}</span>\n                    </h1>\n                </td>\n                <td style=\"text-align:right; vertical-align:middle;\" width=\"20%\">\n                    <a href='/apps'><img src=\"/img/appsYellow.png\" height=\"75px\"/></a>\n                </td>\n            </tr>\n        </table>\n    </div>",
+        "output": "str",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9767c727.a38088",
+        "type": "template",
+        "z": "f20b1460.72ddc8",
+        "name": "HTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n{{{payload.head}}}\n  </head>\n  <body>\n{{{payload.navBar}}}\n{{{payload.html.websocket}}}\n{{{payload.body}}}\n{{{payload.foot}}}\n  </body>\n</html>",
+        "output": "str",
+        "x": 1150,
+        "y": 40,
+        "wires": [
+            [
+                "9032efa3.3430a"
+            ]
+        ]
+    },
+    {
+        "id": "d3d0ef50.18961",
+        "type": "template",
+        "z": "f20b1460.72ddc8",
+        "name": "Foot",
+        "field": "payload.foot",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "    <div id=\"acknowledgeDialog\" title=\"Acknowledge\" class='card'>\n        <p class='card-title' id='acknowledgeDialogTitle'>Warning</p>\n        <div class='card-body'>\n            <p class='tableText' id='acknowledgeDialogText'>Text</p>\n        </div>\n    </div>\n    <div id=\"optionDialog\" title=\"Option\" class='card'>\n        <p class='card-title' id='optionDialogTitle'>Choice</p>\n        <div class='card-body'>\n            <p class='tableText' id='optionDialogText'>Text</p>\n        </div>\n    </div>\n    <div id=\"messageDialog\" title=\"Message\" class='card'>\n        <p class='card-title' id='messageDialogTitle'>Warning</p>\n        <div class='card-body'>\n            <p class='tableText' id='messageDialogText'>Text</p>\n        </div>\n    </div>\n    <script src=\"/scripts/popper.js\"></script>\n    <script src=\"/scripts/bootstrap.js\"></script>",
+        "output": "str",
+        "x": 690,
+        "y": 40,
+        "wires": [
+            [
+                "8bad68e.6d01898"
+            ]
+        ]
+    },
+    {
+        "id": "928011ac.dbb74",
+        "type": "template",
+        "z": "f20b1460.72ddc8",
+        "name": "Head",
+        "field": "payload.head",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "    <meta charset=\"UTF-8\">\n    <link rel=\"icon\" href=\"/img/favicon.ico?v=4\" type=\"image/x-icon\"/>\n    <title>{{payload.title}}</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.css\"/>\n    <link rel=\"stylesheet\" href=\"/jquery/jquery-ui.css\"/>\n    <link rel=\"stylesheet\" href=\"/jquery/jquery-ui-timepicker-addon.css\"/>\n    <script src=\"/jquery/jquery.js\"></script>\n    <script src=\"/jquery/jquery-ui.js\"></script>\n    <script src=\"/jquery/jquery-ui-timepicker-addon.js\"></script>\n    <script src=\"/scripts/plotly-latest.min.js\"></script>\n    <script src=\"/scripts/pako.min.js\"></script>\n{{{payload.extraScripts}}}\n    <style>\n{{{payload.css}}}\n    </style>\n    <style>\n{{{payload.extraCss}}}\n    </style>\n    <script>\n{{{payload.utilityScripts}}}\n    </script>\n    <script>\n{{{payload.javascript}}}\n    </script>",
+        "output": "str",
+        "x": 570,
+        "y": 40,
+        "wires": [
+            [
+                "d3d0ef50.18961"
+            ]
+        ]
+    },
+    {
+        "id": "9032efa3.3430a",
+        "type": "http response",
+        "z": "f20b1460.72ddc8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1270,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "9789418.8b5e2c",
+        "type": "template",
+        "z": "f20b1460.72ddc8",
+        "name": "Utility Scripts",
+        "field": "payload.utilityScripts",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "        var remoteApp = true;\n        var ws;\n        var userID = -1;\n        var useWebSocketsFlag = true;\n        var project = '{{{payload.project}}}';\n        var heartBeatImage = false;\n        var wsUri = '';\n        var wsConnected = false;\n\n        function setRemoteApp(remoteAppSet)\n        {\n            remoteApp  = remoteAppSet;\n        }\n        function webSocketConnected()\n        {\n            return wsConnected;\n        }\n        function useWebSockets(webSocketsFlag)\n        {\n            useWebSocketsFlag = webSocketsFlag;\n        }\n        function wsConnectC()\n        {\n            if (!useWebSocketsFlag)\n            {\n                return;\n            }\n            if (wsUri.length < 1)\n            {\n                var uri = window.location.href.split('://');\n                var wslead = 'ws://';\n                if (uri[0] == 'https') wslead = 'wss://';\n                var questionLocation = uri[1].indexOf('?');\n                if (questionLocation >= 0)\n                {\n                    uri[1] = uri[1].substring(0,questionLocation);\n//                    console.log(uri[1]);\n                }\n                if (uri[1].indexOf('/') < (uri[1].length - 1))\n                {\n                    wsUri = wslead + uri[1] + '/websocket';\n                }\n                else\n                {\n                    wsUri = wslead + uri[1] + 'websocket';\n                }\n            }\n            ws = new WebSocket(wsUri);\n            ws.onmessage = function(event)\n            {\n                onWebSocketMessage(JSON.parse(event.data));\n        \n            };\n            ws.onopen = function()\n            {\n                console.log(\"Websocket connected\");\n                wsConnected = true;\n                $('#webSocketStatus').html('Open');\n                $('#reOpenWebSocketButton').hide();\n                $('#webSocketStatusRow').css('padding-bottom','0px');\n                $('#webSocketStatusCard').hide();\n                onWebSocketOpen();\n            };\n            ws.onclose = function()\n            {\n                console.log(\"Websocket closed\");\n                wsConnected = false;\n                $('#webSocketStatus').html('Closed');\n                $('#reOpenWebSocketButton').show();\n                $('#webSocketStatusCard').show();\n                $('#webSocketStatusRow').css('padding-bottom','25px');\n                onWebSocketClose();\n                wsConnectC();\n            };\n        }\n\n        function getRandomInt(max)\n        {\n          return Math.floor(Math.random() * Math.floor(max));\n        }\n        $( document ).ready(function()\n        {\n            userID  = {{{payload.userID}}};\n            if (!useWebSocketsFlag)\n            {\n                $('#webSocketStatusRow').css('padding-bottom','0px');\n                $('#webSocketStatusCard').hide();\n            }\n            wsConnectC();\n            onDocumentReady();\n       });\n        $( function() \n        {\n            $( \"#acknowledgeDialog\" ).dialog(\n                {\n                    width:    500,\n                    autoOpen: false,\n                    buttons:\n                    [\n                        {\n                            text: \"Ok\",\n                            click: function() { $( this ).dialog( \"close\" );},\n                            showText: false\n                        },\n                   ]\n                });\n            $( \"#messageDialog\" ).dialog(\n                {\n                    width:    500,\n                    autoOpen: false,\n                    buttons:[]\n                });\n        } );\n        function optionDialog(headerText, title, text, buttonTexts, buttonFunctions)\n        {\n            var buttonDefinitions = [];\n            for (var ii = 0; ii < buttonTexts.length; ++ii)\n            {\n                buttonDefinitions[ii] = \n                    {\n                        text: buttonTexts[ii],\n                        click: buttonFunctions[ii],\n                        showText: false\n                    };\n            }\n            $( \"#optionDialog\" ).dialog( \"option\", \"title\", headerText );   \n            $( \"#optionDialog\" ).dialog( \"option\", \"buttons\", buttonDefinitions);\n            $( \"#optionDialogTitle\" ).html(title);\n            $( \"#optionDialogText\" ).html(text);\n            $( \"#optionDialog\" ).dialog( \"open\" );\n        }\n        $( function() \n        {\n            $( \"#optionDialog\" ).dialog(\n                {\n                    width:    500,\n                    autoOpen: false,\n                    buttons:\n                    [\n                        {\n                            text: \"Ok\",\n                            click: function() {$( this ).dialog( \"close\" );},\n                            showText: false\n                        },\n                        {\n                            text: \"Cancel\",\n                            click: function() {$( this ).dialog( \"close\" );},\n                            showText: false\n                        },\n                   ]\n                });\n        } );\n        function acknowledgeDialog(headerText, title, text)\n        {\n            $( \"#acknowledgeDialog\" ).dialog( \"option\", \"title\", headerText );    \n            $( \"#acknowledgeDialogTitle\" ).html(title);\n            $( \"#acknowledgeDialogText\" ).html(text);\n            $( \"#acknowledgeDialog\" ).dialog( \"open\" );\n        }\n        function messageDialog(headerText, title, text)\n        {\n            $( \"#messageDialog\" ).dialog( \"option\", \"title\", headerText );    \n            $( \"#messageDialogTitle\" ).html(title);\n            $( \"#messageDialogText\" ).html(text);\n            $( \"#messageDialog\" ).dialog( \"open\" );\n        }\n        function heartbeat()\n        {\n            heartBeatImage = !heartBeatImage;\n            var heartBeatImageSrc = '/img/heartRed.png';\n            if (heartBeatImage) heartBeatImageSrc = '/img/heartPink.png';\n            $('#heartBeatID').attr('src',heartBeatImageSrc);\n        }\n        function getCookie(extension)\n        {\n            var cookies = document.cookie.split(';');\n            var token = null;\n            var cookieName = project + extension + \"=\";\n            for (var icookie = 0; icookie < cookies.length; ++icookie)\n            {\n                var index = cookies[icookie].indexOf(cookieName);\n                if (index >= 0)\n                {\n                    token = cookies[icookie].substring(index + cookieName.length);\n                }\n            }\n            return token;\n        }\n        function sendActionMsg(topic,role,actionMsg)\n        {\n            var roleToken = \"\";\n            if (remoteApp) roleToken  = getCookie('Role');\n            if (roleToken == null)\n            {\n                location.reload();\n                return;\n            }\n            var webSocketMsg = \n            {\n                topic     : topic,\n                payload   : actionMsg,\n                userID    : userID,\n                token     : getCookie('Role'),\n                role      : role\n            };\n            ws.send(JSON.stringify(webSocketMsg));\n        }\n",
+        "output": "str",
+        "x": 430,
+        "y": 40,
+        "wires": [
+            [
+                "928011ac.dbb74"
+            ]
+        ]
+    },
+    {
+        "id": "4778bbbd.1da094",
+        "type": "function",
+        "z": "f20b1460.72ddc8",
+        "name": "Get project name and userID",
+        "func": "function getRandomInt(max)\n{\n  return Math.floor(Math.random() * Math.floor(max));\n}\nmsg.payload['project'] = global.get('project')\nmsg.payload['userID'] = getRandomInt(32768);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 220,
+        "y": 40,
+        "wires": [
+            [
+                "9789418.8b5e2c"
+            ]
+        ]
+    },
+    {
+        "id": "8bad68e.6d01898",
+        "type": "template",
+        "z": "f20b1460.72ddc8",
+        "name": "html.websocket",
+        "field": "payload.html.websocket",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!-- websocket status HTML -->\n    <div width=\"100%\">\n        <div class='row' id='webSocketStatusRow' style='padding-bottom: 0px;'>\n            <div class='col-md-12' align='center'>\n\n                <div class='card' id='webSocketStatusCard' >\n                    <p class='card-title'>Web Socket Status</p>\n                    <div class='card-body' align=\"center\">\n                        <div class='row'  style='padding-top: 0px;'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Websocket Status</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <button class='btn card-button btn-block big-text' id='reOpenWebSocketButton' onclick=\"wsConnectC()\">Re-open</button>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text' id='webSocketStatus' >Closed</span>\n                                   </td>\n                                </tr>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n",
+        "output": "str",
+        "x": 840,
+        "y": 40,
+        "wires": [
+            [
+                "41e0b61d.0418d8"
+            ]
+        ]
+    },
+    {
+        "id": "41e0b61d.0418d8",
+        "type": "function",
+        "z": "f20b1460.72ddc8",
+        "name": "IP filter",
+        "func": "var ipfilter = [\n    \"127.0.0.16\"];\nvar ipAddress = ( msg.req.headers['x-forwarded-for'] || '').split(',').pop() || \n          msg.req.connection.remoteAddress || \n          msg.req.socket.remoteAddress || \n          msg.req.connection.socket.remoteAddress;\nif (ipAddress==undefined) return null;\nvar ipAddressSplit = ipAddress.split(\".\");\nfor (var ii =  0; ii < ipfilter.length; ++ii)\n{\n    var ipfilterSplit = ipfilter[ii].split(\".\");\n    if (ipAddress == ipfilter[ii])\n    { \n        return null;\n    }\n    if (ipfilterSplit[2] == '*')\n    {\n        if ((ipfilterSplit[0] == ipAddressSplit[0]) && (ipfilterSplit[1] == ipAddressSplit[1]))\n        {\n            return null;\n        }\n    }\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 990,
+        "y": 40,
+        "wires": [
+            [
+                "9767c727.a38088"
+            ]
+        ]
+    },
+    {
+        "id": "cf64bb0c.ae9988",
+        "type": "template",
+        "z": "7cd12475.110e0c",
+        "name": "CSS",
+        "field": "payload.css",
+        "fieldType": "msg",
+        "format": "css",
+        "syntax": "mustache",
+        "template": "        :root \n        {\n          --color1: #415c71;\n          --color2: #547792;\n          --color3: #9eb5c7;\n          --color4: #c6c2bb;\n          --color5: #fdc300;\n          --big-text-size :300%;\n          --bold-text :900;\n          --vert-pad : 25px;\n          --horz-pad : 25px;\n        }\n        body \n        {\n          background-color: white !important;\n          padding-left:25px;\n          padding-right:25px;\n        }\n        \n        img \n        {\n          object-fit: contain;\n        }\n        a\n        {\n            color: white;\n        }\n        a:visited \n        { \n            color: var(--white);\n        }\n        a:hover \n        { \n            color: var(--color5);\n        }\n\n        .jumbotron \n        {\n          background-color: var(--color2) !important;\n          color: white;\n          padding-top:25px;\n          padding-bottom:25px;\n        }\n        .jumbotron-title\n        {\n          color:var(--color5);\n        }\n        .jumbotron-button\n        {\n          color: white;\n          background-color: var(--color1);\n       }\n        .card\n        {\n          background-color: var(--color2) !important;\n          text-align: center;\n        }\n        .card-body\n        {\n          background-color: var(--color3);;\n        }\n        .card-button\n        {\n          color: var(--color5) !important;\n          background-color: var(--color1) !important;\n          font-weight: bold;\n        }\n        .card-title\n        {\n          color: var(--color5);\n          font-weight: var(--bold-text);\n          font-size: var(--big-text-size);\n         }\n        .card-text\n        {\n          color: white;\n          text-align: left;\n          font-size: var(--big-text-size);\n        }\n        .danger-card\n        {\n          background-color: yellow !important;\n          text-align: center;\n        }\n        .danger-card-body\n        {\n          background-color: yellow;\n        }\n        .danger-card-button\n        {\n          color: yellow !important;\n          background-color: red !important;\n          font-weight: bold;\n        }\n        .danger-card-title\n        {\n          color: red;\n          font-weight: var(--bold-text);\n          font-size: var(--big-text-size);\n         }\n        .danger-card-text\n        {\n          color: white;\n          text-align: left;\n          font-size: var(--big-text-size);\n        }\n        .tableHeading\n        {\n          color:var(--container-title-color);\n        }\n        .tableText\n        {\n          color:var(--container-text-color);\n          font-size: var(--big-text-size);\n        }\n       .vert-pad\n        {\n            padding-top:var(--vert-pad);;\n            padding-bottom:var(--vert-pad);;\n        }\n        .horz-pad\n        {\n            padding-left:var(--horz-pad);;\n            padding-right:var(--horz-pad);;\n        }\n        .big-text\n        {\n            font-size: var(--big-text-size);\n        }\n        .bold-text\n        {\n            font-weight: var(--bold-text);\n        }\n       .ui-dialog-titlebar-close \n        {\n            visibility: hidden;\n        }\n        input.inputLarger \n        { \n            transform: scale(3); \n            margin: 1px;\n        }\n        .googleSlide4by3-container \n        {\n            position: relative;\n            overflow: hidden;\n            padding-top: 75.0%;\n        }\n        .googleSlide4by3-iframe {\n            position: absolute;\n            top: 0;\n            left: 0;\n            width: 100%;\n            height: 100%;\n            border: 0;\n        }        \n        .custom-select\n        {\n            color: black;\n            background-color: white;\n            height:80px;\n            line-height:70px;\n        }\n",
+        "output": "str",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c106069f.4393e8",
+        "type": "subflow:7cd12475.110e0c",
+        "z": "eb80fbfc.f4e4e8",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "22fa7add.e17436"
+            ]
+        ]
+    },
+    {
+        "id": "8d7e6d06.ac30b",
+        "type": "subflow:f20b1460.72ddc8",
+        "z": "eb80fbfc.f4e4e8",
+        "name": "",
+        "x": 620,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "22fa7add.e17436",
+        "type": "subflow:5076572e.f4d1e8",
+        "z": "eb80fbfc.f4e4e8",
+        "x": 420,
+        "y": 80,
+        "wires": [
+            [
+                "8d7e6d06.ac30b"
+            ]
+        ]
+    },
+    {
+        "id": "59616bee.70f684",
+        "type": "http in",
+        "z": "c4285970.3276d8",
+        "name": "/apps",
+        "url": "/apps",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "1b85bd8b.cc3442"
+            ]
+        ]
+    },
+    {
+        "id": "8351e7f2.124448",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "Body",
+        "field": "payload.body",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!-- Body HTML -->\n    <div class='container' width=\"100%\">\n        <div class='row vert-pad' >\n            <div class='col-md-12'>\n                <a class=\"btn jumbotron-button btn-block big-text bold-text\" width='80%' href=\"/blinky-webcam?name={{{payload.deviceAName}}}\" >\n                    <table width=\"100%\" alight=\"left\">\n                        <tr>\n                            <td width=\"30%\" align='center'> <img src=\"/img/cameraYellow.png\" height=\"70px\"/></td>\n                            <td width=\"70%\" align=\"left\">Blinky WebCam {{{payload.deviceAName}}}</td>\n                        </tr>\n                    </table>\n                </a>\n            </div>\n        </div>\n        <div class='row vert-pad' >\n            <div class='col-md-12'>\n                <a class=\"btn jumbotron-button btn-block big-text bold-text\" width='80%' href=\"/setup\" >\n                    <table width=\"100%\" alight=\"left\">\n                        <tr>\n                            <td width=\"30%\" align='center'> <img src=\"/img/basicYellow.png\" height=\"70px\"/></td>\n                            <td width=\"70%\" align=\"left\">Setup</td>\n                        </tr>\n                    </table>\n                </a>\n            </div>\n        </div>\n    </div>",
+        "output": "str",
+        "x": 850,
+        "y": 200,
+        "wires": [
+            [
+                "df84207.9140be"
+            ]
+        ]
+    },
+    {
+        "id": "db4f3403.245b08",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "Title",
+        "field": "payload.title",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "Blinky Web Cam",
+        "output": "str",
+        "x": 570,
+        "y": 200,
+        "wires": [
+            [
+                "7ada4035.2008e"
+            ]
+        ]
+    },
+    {
+        "id": "bbd835c7.d1bbd8",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "JavaScript",
+        "field": "payload.javascript",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "        useWebSockets(false);\n        function onDocumentReady()\n        {\n        }\n        function onWebSocketOpen()\n        {\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n        }\n\n",
+        "output": "str",
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "db4f3403.245b08"
+            ]
+        ]
+    },
+    {
+        "id": "7ada4035.2008e",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "navBarIcon",
+        "field": "payload.navBarIcon",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "cameraYellow.png",
+        "output": "str",
+        "x": 710,
+        "y": 200,
+        "wires": [
+            [
+                "8351e7f2.124448"
+            ]
+        ]
+    },
+    {
+        "id": "2d92fdd9.f43e62",
+        "type": "exec",
+        "z": "c4285970.3276d8",
+        "command": "iwconfig",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 740,
+        "y": 60,
+        "wires": [
+            [
+                "1aac2cbe.6139e3"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6983007e.2da97",
+        "type": "inject",
+        "z": "c4285970.3276d8",
+        "name": "",
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 60,
+        "wires": [
+            [
+                "2d92fdd9.f43e62"
+            ]
+        ]
+    },
+    {
+        "id": "1aac2cbe.6139e3",
+        "type": "function",
+        "z": "c4285970.3276d8",
+        "name": "Get Signal Quality",
+        "func": "var info = msg.payload;\nvar linkStartIndex  = info.indexOf('Link Quality=');\nvar levelStartIndex = info.indexOf('Signal level=');\nvar linkQuality = Number(info.substring(linkStartIndex + 13, linkStartIndex + 15));\nvar signalLevel =  Number(info.substring(levelStartIndex + 13, levelStartIndex + 16));\nvar ssid = info.substring(info.indexOf('ESSID') + 7);\nssid = ssid.substring(0,ssid.indexOf('\"'));\nvar val = {linkQuality : linkQuality, signalLevel: signalLevel, ssid:ssid};\nglobal.set('linkQuality',linkQuality);\nglobal.set('signalLevel', signalLevel);\nglobal.set('ssid', ssid);\nreturn {topic :'test',payload : val};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 920,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b393e181.c655c",
+        "type": "inject",
+        "z": "c4285970.3276d8",
+        "name": "project",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "project",
+        "payload": "PROJECT",
+        "payloadType": "env",
+        "x": 1120,
+        "y": 60,
+        "wires": [
+            [
+                "32afa5a6.727f2a"
+            ]
+        ]
+    },
+    {
+        "id": "32afa5a6.727f2a",
+        "type": "function",
+        "z": "c4285970.3276d8",
+        "name": "Save global env variables",
+        "func": "global.set(msg.topic,msg.payload);\nreturn null;",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1310,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "57bb33aa.66a54c",
+        "type": "http in",
+        "z": "c4285970.3276d8",
+        "name": "/",
+        "url": "/",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "152c6321.6b65ad"
+            ]
+        ]
+    },
+    {
+        "id": "f72f0124.801c6",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "Body",
+        "field": "payload.body",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!-- Body HTML -->\n",
+        "output": "str",
+        "x": 850,
+        "y": 140,
+        "wires": [
+            [
+                "c8bc57bd.f68c88"
+            ]
+        ]
+    },
+    {
+        "id": "724369a6.3bd348",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "Title",
+        "field": "payload.title",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "Blinky Web Cam",
+        "output": "str",
+        "x": 570,
+        "y": 140,
+        "wires": [
+            [
+                "1b9bbafa.cd6bd5"
+            ]
+        ]
+    },
+    {
+        "id": "152c6321.6b65ad",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "JavaScript",
+        "field": "payload.javascript",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "        useWebSockets(false);\n        function onDocumentReady()\n        {\n            window.location = '/apps'\n        }\n        function onWebSocketOpen()\n        {\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n        }\n\n",
+        "output": "str",
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "724369a6.3bd348"
+            ]
+        ]
+    },
+    {
+        "id": "1b9bbafa.cd6bd5",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "navBarIcon",
+        "field": "payload.navBarIcon",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "cameraYellow.png",
+        "output": "str",
+        "x": 710,
+        "y": 140,
+        "wires": [
+            [
+                "f72f0124.801c6"
+            ]
+        ]
+    },
+    {
+        "id": "df84207.9140be",
+        "type": "subflow:eb80fbfc.f4e4e8",
+        "z": "c4285970.3276d8",
+        "name": "",
+        "x": 1030,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "c8bc57bd.f68c88",
+        "type": "subflow:eb80fbfc.f4e4e8",
+        "z": "c4285970.3276d8",
+        "name": "",
+        "x": 1030,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "34c30fe3.da2e8",
+        "type": "inject",
+        "z": "c4285970.3276d8",
+        "name": "deviceA",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "deviceA",
+        "payload": "MQTTDEVICEA",
+        "payloadType": "env",
+        "x": 140,
+        "y": 60,
+        "wires": [
+            [
+                "ea35002c.aa178"
+            ]
+        ]
+    },
+    {
+        "id": "ea35002c.aa178",
+        "type": "function",
+        "z": "c4285970.3276d8",
+        "name": "Init device name",
+        "func": "var mqttSplit = msg.payload.split('/');\nvar deviceProps = {\n    project     :   mqttSplit[0],\n    deviceType  :   mqttSplit[1],\n    name        :   mqttSplit[2],\n};\nflow.set(msg.topic + 'Props',deviceProps);\nreturn null;",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "1b85bd8b.cc3442",
+        "type": "function",
+        "z": "c4285970.3276d8",
+        "name": "Device Names",
+        "func": "msg.payload['deviceAName'] = flow.get('deviceAProps').name;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 200,
+        "wires": [
+            [
+                "bbd835c7.d1bbd8"
+            ]
+        ]
+    },
+    {
+        "id": "2de9d253.06695e",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "script.user",
+        "field": "payload.script.user",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "        function getCreds()\n        {\n            var now = new Date().getTime();\n            var expDate = Number(getCookie('ExpDate'));\n            if (expDate > 0)\n            {\n                expDate = expDate - now;\n                if(expDate < 0)\n                {\n                    logout();\n                }\n                else\n                {\n                    var hours = Math.floor(expDate / 3600000);\n                    var minutes = expDate - hours * 3600000;\n                    minutes = Math.floor(minutes / 60000);\n                    var seconds = expDate - (hours * 3600000) - (minutes * 60000);\n                    seconds = Math.floor(seconds / 1000);\n                    hours = hours.toString();\n                    if (hours.length == 1) hours = '0' + hours; \n                    minutes = minutes.toString();\n                    if (minutes.length == 1) minutes = '0' + minutes; \n                    seconds = seconds.toString();\n                    if (seconds.length == 1) seconds = '0' + seconds; \n                    var timeString = hours + ':' + minutes + ':' + seconds;\n                    $('#usernameId').text(getCookie('Username'));\n                    $('#expTimeId').text(timeString);\n                }\n            }\n            else\n            {\n                $('#usernameId').text(getCookie('Username'));\n                $('#expTimeId').text('Forever');\n            }\n        }\n        function logout()\n        {\n            document.cookie = project + \"Role= ; expires = Thu, 01 Jan 1970 00:00:00 GMT\";\n            document.cookie = project + \"ExpDate= ; expires = Thu, 01 Jan 1970 00:00:00 GMT\";\n            document.cookie = project + \"Username= ; expires = Thu, 01 Jan 1970 00:00:00 GMT\";\n            window.location.href = \"/\";\n        }\n        function renew()\n        {\n            var actionMsg = {};\n            sendActionMsg('renew', 'renew', actionMsg);\n        }\n        function updateCookie(msg)\n        {\n            document.cookie = project + \"Role=\" + msg.role;\n            document.cookie = project + \"ExpDate=\" + msg.expDate;\n            document.cookie = project + \"Username=\" + msg.username;\n        }\n        function downloadToken()\n        {\n            downloadString(getCookie(\"Role\"), \"text/plain\", project + \"-token.txt\");\n        }\n// from https://gist.github.com/danallison/3ec9d5314788b337b682\n        function downloadString(text, fileType, fileName) \n        {\n            var blob = new Blob([text], { type: fileType });\n            \n            var a = document.createElement('a');\n            a.download = fileName;\n            a.href = URL.createObjectURL(blob);\n            a.dataset.downloadurl = [fileType, a.download, a.href].join(':');\n            a.style.display = \"none\";\n            document.body.appendChild(a);\n            a.click();\n            document.body.removeChild(a);\n            setTimeout(function() { URL.revokeObjectURL(a.href); }, 1500);\n        }",
+        "output": "str",
+        "x": 670,
+        "y": 420,
+        "wires": [
+            [
+                "c1034be9.37f0a8"
+            ]
+        ]
+    },
+    {
+        "id": "ed792a6f.1bde88",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "html.user",
+        "field": "payload.html.user",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "                <div class='card' id='userCardId'>\n                    <div class='card-body' align=\"center\">\n                        <table width=\"100%\">\n                            <tr>\n                                <td  align=\"left\">\n                                     <span class='card-text' style='color:black;'>User:</span>\n                                </td>\n                                <td  align=\"right\">\n                                     <span class='card-text' id='usernameId'></span>\n                                </td>\n                            </tr>\n                            <tr>\n                                <td  align=\"left\">\n                                    <span class='card-text' style='color:black;'>Time left:</span>\n                                </td>\n                                <td  align=\"right\">\n                                     <span class='card-text' id='expTimeId'></span>\n                                </td>\n                            </tr>\n                        </table>\n                        <table width=\"100%\">\n                            <tr>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' id='logoutButton' onclick=\"renew()\" >Renew</button>\n                                </td>\n                                <td width=\"10%\"></td>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' id='logoutButton' onclick=\"logout()\" >Logout</button>\n                                </td>\n                            </tr>\n                        </table>\n                    </div>\n                </div>\n",
+        "output": "str",
+        "x": 980,
+        "y": 460,
+        "wires": [
+            [
+                "33773f16.f49b8"
+            ]
+        ]
+    },
+    {
+        "id": "33773f16.f49b8",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "html.wifimon",
+        "field": "payload.html.wifimon",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!-- Dashboard HTML -->\n                <div class='card'>\n                    <p class='card-title'>WiFi Connection</p>\n                    <div class='card-body' align=\"center\">\n                        <div class='row'  style='padding-top: 0px;'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Device Update</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <img src='/img/heartRed.png' id='heartBeatID' width='100px' height='100px'/>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Signal Level (dBm)</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text' id='signalLevelId' >-100</span>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Link Quality (/70)</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text' id='linkQualityId' >-1</span>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n",
+        "output": "str",
+        "x": 990,
+        "y": 500,
+        "wires": [
+            [
+                "3ad17ff5.48fd9"
+            ]
+        ]
+    },
+    {
+        "id": "3ad17ff5.48fd9",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "html.reset",
+        "field": "payload.html.reset",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "                <div class='card' id='reset'>\n                    <div class='card-body' align=\"center\">\n                         <table width=\"100%\">\n                            <tr>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' onclick=\"reset(1)\" >Reset</button>\n                                </td>\n                                <td width=\"10%\"></td>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' onclick=\"reset(2)\" >Reboot</button>\n                                </td>\n                            </tr>\n                        </table>\n                    </div>\n                </div>\n",
+        "output": "str",
+        "x": 980,
+        "y": 540,
+        "wires": [
+            [
+                "2afaf45b.a53bac"
+            ]
+        ]
+    },
+    {
+        "id": "2afaf45b.a53bac",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "body",
+        "field": "payload.body",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "    <div width=\"100%\">\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.snapshot}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.config}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.user}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.wifimon}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.reset}}}\n            </div>\n        </div>\n    </div>",
+        "output": "str",
+        "x": 970,
+        "y": 580,
+        "wires": [
+            [
+                "c0e5e9d.ce66618"
+            ]
+        ]
+    },
+    {
+        "id": "c0e5e9d.ce66618",
+        "type": "subflow:eb80fbfc.f4e4e8",
+        "z": "c4285970.3276d8",
+        "name": "",
+        "x": 1210,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "8cc01d13.f85ae",
+        "type": "websocket in",
+        "z": "c4285970.3276d8",
+        "name": "/blinky-webcam/websocket",
+        "server": "8654c923.da8668",
+        "client": "",
+        "x": 180,
+        "y": 280,
+        "wires": [
+            [
+                "bf551c25.4b208"
+            ]
+        ]
+    },
+    {
+        "id": "690c7e77.d99b4",
+        "type": "websocket out",
+        "z": "c4285970.3276d8",
+        "name": "/blinky-webcam/websocket",
+        "server": "8654c923.da8668",
+        "client": "",
+        "x": 1110,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "bf551c25.4b208",
+        "type": "link out",
+        "z": "c4285970.3276d8",
+        "name": "blinky-webcam out",
+        "links": [
+            "1ea7010c.d4ff6f"
+        ],
+        "x": 335,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "999aa7fa.377978",
+        "type": "link in",
+        "z": "c4285970.3276d8",
+        "name": "blinky-webcam in",
+        "links": [
+            "fa3bdddb.4a265"
+        ],
+        "x": 955,
+        "y": 280,
+        "wires": [
+            [
+                "690c7e77.d99b4"
+            ]
+        ]
+    },
+    {
+        "id": "76c6cbef.b885a4",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Readings Alarm Scan",
+        "func": "if (!msg.payload) return null;\nvar device = flow.get('device');\ndevice.linkQuality.value     = global.get('linkQuality');\ndevice.signalLevel.value     = global.get('signalLevel');\nscalarAlarmScan(device, 'reading');\nvar newMsg = \n{\n    topic: flow.get('deviceProps').project + '/' + flow.get('deviceProps').deviceType + '/' + flow.get('deviceProps').name + '/reading',\n    payload: JSON.stringify(device)\n}\nreturn newMsg;\n\nfunction getActionArray(device, type, actionType)\n{\n    var actionArray = [];\n    var keys = Object.keys(device);\n    for (var ii = 0; ii < keys.length; ++ii)\n    {\n        if (device[keys[ii]].hasOwnProperty('type'))\n        {\n            if (device[keys[ii]].type == type)\n            {\n                if (device[keys[ii]].action == actionType)\n                {\n                    actionArray.push(device[keys[ii]]);\n                }\n            }\n        }\n    }\n    return actionArray;\n}\nfunction scalarAlarmScan(device, actionType)\n{\n    var actionArray = getActionArray(device, 'scalar', actionType);\n    if (actionArray.length > 0)\n    {\n        for (var ii = 0; ii < actionArray.length; ++ii)\n        {\n            actionArray[ii].alarm.value = 0;\n            if (!isNaN(actionArray[ii].value))\n            {\n                if (actionArray[ii].value < actionArray[ii].alarm.limits.low)  actionArray[ii].alarm.value = 1;\n                if (actionArray[ii].value < actionArray[ii].alarm.limits.lolo) actionArray[ii].alarm.value = 3;\n                if (actionArray[ii].value > actionArray[ii].alarm.limits.high) actionArray[ii].alarm.value = 2;\n                if (actionArray[ii].value > actionArray[ii].alarm.limits.hihi) actionArray[ii].alarm.value = 4;\n            }\n        }\n    }\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 600,
+        "wires": [
+            [
+                "2fc82ec3.8e4f22"
+            ]
+        ]
+    },
+    {
+        "id": "3851c9c6.31cce6",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Prepare MQTT topic",
+        "func": "var mqttArray = msg.topic.split('/');\nvar device = \n{\n    project     : mqttArray[0],\n    deviceType  : mqttArray[1],\n    name        : mqttArray[2],\n    prop        : mqttArray[3],\n};\nreturn {topic : msg.topic, payload:{topic:'readings', mqttDevice : device, payload:msg.payload}};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1220,
+        "y": 600,
+        "wires": [
+            [
+                "fa3bdddb.4a265"
+            ]
+        ]
+    },
+    {
+        "id": "2fc82ec3.8e4f22",
+        "type": "delay",
+        "z": "5f562f66.a301e",
+        "name": "Limit 1 Hz",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 920,
+        "y": 600,
+        "wires": [
+            [
+                "6b62af7d.b70a9"
+            ]
+        ]
+    },
+    {
+        "id": "fa3bdddb.4a265",
+        "type": "link out",
+        "z": "5f562f66.a301e",
+        "name": "Device A web socket out",
+        "links": [
+            "999aa7fa.377978"
+        ],
+        "x": 1375,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "6b62af7d.b70a9",
+        "type": "gzip",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "x": 1050,
+        "y": 600,
+        "wires": [
+            [
+                "3851c9c6.31cce6"
             ]
         ]
     }
