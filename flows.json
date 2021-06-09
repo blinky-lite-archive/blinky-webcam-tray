@@ -159,7 +159,7 @@
                     "edited": false
                 },
                 "page-sidebar-backgroundColor": {
-                    "value": "#000000",
+                    "value": "#333333",
                     "edited": false
                 },
                 "group-textColor": {
@@ -189,6 +189,12 @@
                 "base-font": {
                     "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
                 }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
             }
         },
         "site": {
@@ -240,6 +246,22 @@
         "wholemsg": "false"
     },
     {
+        "id": "c7a43587.2944e8",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "fbd536a.22bf9c8",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "fbd536a.22bf9c8",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard"
+    },
+    {
         "id": "71ce0943.81bf18",
         "type": "function",
         "z": "c4285970.3276d8",
@@ -286,7 +308,7 @@
         "fieldType": "msg",
         "format": "javascript",
         "syntax": "mustache",
-        "template": "// Global Javascript\n        var restfulDevice = \n        {\n            deviceType  : '{{{payload.script.deviceType}}}',\n            name        : '{{{payload.script.name}}}',\n            project     : '{{{payload.script.project}}}'\n        };\n        var mqttDevice = null;\n        var device = null;\n        var pingInterval = 5000;\n        var lastPing = 0;\n        var editingConfig = false;\n        var snapshotViewShowing = true;\n\n        useWebSockets(true);\n        function onDocumentReady()\n        {\n            setRemoteApp(false);\n            if (remoteApp)\n            {\n                getCreds();\n                setInterval(function(){getCreds();}, 1000);\n            }\n            else\n            {\n                $('#userCardId').hide();\n            }\n            setInterval(function()\n            {\n                var now = new Date().getTime();\n                if ((now - lastPing) > pingInterval)\n                {\n                    lastPing = now;\n                    var actionMsg = \n                        {\n                            topic   : restfulDevice.project + '/' +  restfulDevice.deviceType + '/' +  restfulDevice.name + '/ping',\n                            payload : true\n                        };\n                    sendActionMsg('ping', 'ping', actionMsg);\n               }\n            }, 1000);\n            enableConfig(false);\n            $('#configCardBody').hide();\n            toggleSnapshotView();\n            $('#configCardBody').hide();\n            $('#takeSnapShotButton').prop(\"disabled\", true);\n        }\n        function onWebSocketOpen()\n        {\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n//            console.log(msg);\n            switch(msg.topic)\n            {\n                case 'readings':\n                    if ((msg.mqttDevice.name == restfulDevice.name) && (msg.mqttDevice.deviceType == restfulDevice.deviceType)  && (msg.mqttDevice.project == restfulDevice.project) )\n                    {\n                        lastPing = new Date().getTime();\n                        heartbeat();\n                        device = JSON.parse(pako.inflate(msg.payload, { to: 'string' }));\n                        mqttDevice = msg.mqttDevice;\n                        updateDmaReadings();\n                    }\n                    break;\n                case 'readDatabase':\n                    if (msg.userID == userID)\n                    {\n                        if ((msg.payload.device.deviceType == restfulDevice.deviceType) && (msg.payload.device.name == restfulDevice.name) )\n                            putArchiveValues(msg.payload);\n                    }\n                    break;\n                case 'renew':\n                    if (msg.userID == userID)\n                    {\n                        updateCookie(msg);\n                    }\n                    break;\n                case 'permissionError':\n                    if (msg.userID == userID)\n                    {\n                        acknowledgeDialog('Permission', 'Error', msg.payload);\n                    }\n                    break;\n                case 'loginExpired':\n                    if (msg.userID == userID)\n                    {\n                       location.reload();\n                    }\n                    break;\n                default:\n                    break;\n            }\n        }\n        function sendSetting()\n        {\n            var actionMsg = \n                {\n                    topic   : mqttDevice.project + '/' +  mqttDevice.deviceType + '/' +  mqttDevice.name + '/setting',\n                    payload : pako.deflate(JSON.stringify(device))\n                };\n            sendActionMsg('setting','setting',actionMsg);\n       }\n        function setScalarValue(settingValue, attrName)\n        {\n            var settingAttr = device[attrName];\n            if ( (settingAttr.alarm.limits.lolo <= settingValue) && (settingValue <= settingAttr.alarm.limits.hihi) )\n            {\n                settingAttr.value = settingValue;\n                sendSetting();\n            } \n            else\n            {\n                acknowledgeDialog('Acknowledge', 'Error', 'Entry outside range! (' + settingAttr.alarm.limits.lolo.toString() + '-' + settingAttr.alarm.limits.hihi.toString() + ' ' + settingAttr.unit);\n            }\n        }\n        function reset(actionFlag)\n        {\n            var headerText = 'Warning';\n            var title = 'Resetting Tray';\n            var text = 'I hope you know what you are doing.';\n            var buttonTexts = ['Reset', 'Cancel'];\n            var buttonFunctions = \n            [\n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                    setScalarValue(actionFlag, 'reset');\n                 }, \n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                }\n            ];\n            if (actionFlag == 2)\n            {\n                title = 'Rebooting Tray';\n                buttonTexts[0] = 'Reboot';\n            }\n            optionDialog(headerText, title, text, buttonTexts, buttonFunctions);\n        }\n// Update Readings Javascript\n        function updateDmaReadings()\n        {\n            $('#linkQualityId').text(device.linkQuality.value);\n            $('#signalLevelId').text(device.signalLevel.value);\n            $('#snapshotTimeStamp').text(new Date(device.timeStamp).toLocaleString('en-SE', { timeZone: 'Europe/Stockholm' }));\n            if (device.takeImage.value == 0)\n            {\n                $('#takeSnapShotButton').prop(\"disabled\", false);\n            }\n            else\n            {\n                $('#takeSnapShotButton').prop(\"disabled\", true);\n            }\n\n            if(!editingConfig)\n            {\n                $('#rotSelect').val(device.config.rot.value.toString());\n                $('#rotEnable').prop(\"checked\", device.config.rot.enabled);\n                $('#effectsSelect').val(device.config.ifx.value.toString());\n                $('#effectsEnable').prop(\"checked\", device.config.ifx.enabled);\n                $('#exposureSelect').val(device.config.ex.value.toString());\n                $('#exposureEnable').prop(\"checked\", device.config.ex.enabled);\n                $('#awbSelect').val(device.config.awb.value.toString());\n                $('#awbEnable').prop(\"checked\", device.config.awb.enabled);\n                $('#mmSelect').val(device.config.mm.value.toString());\n                $('#mmEnable').prop(\"checked\", device.config.mm.enabled);\n                $('#shValue').val(device.config.sh.value.toString());\n                $('#shEnable').prop(\"checked\", device.config.sh.enabled);\n                $('#coValue').val(device.config.co.value.toString());\n                $('#coEnable').prop(\"checked\", device.config.co.enabled);\n                $('#brValue').val(device.config.br.value.toString());\n                $('#brEnable').prop(\"checked\", device.config.br.enabled);\n                $('#saValue').val(device.config.sa.value.toString());\n                $('#saEnable').prop(\"checked\", device.config.sa.enabled);\n                $('#ISOValue').val(device.config.ISO.value.toString());\n                $('#ISOEnable').prop(\"checked\", device.config.ISO.enabled);\n                $('#evValue').val(device.config.ev.value.toString());\n                $('#evEnable').prop(\"checked\", device.config.ev.enabled);\n                $('#ssValue').val(device.config.ss.value.toString());\n                $('#ssEnable').prop(\"checked\", device.config.ss.enabled);\n                $('#cfxValue').val(device.config.cfx.value.toString());\n                $('#cfxEnable').prop(\"checked\", device.config.cfx.enabled);\n            }\n\n            \n            $('#raspistillImg').attr('src','img/raspistill/' + device.deviceType + '-' + device.name + '.jpg' +'?t=' + device.timeStamp.toString() );\n            $('#raspistillImgLink').attr('href','img/raspistill/' + device.deviceType + '-' + device.name + '.jpg' +'?t=' + device.timeStamp.toString() );\n\n        }\n        function enableConfig(enable)\n        {\n            $('#rotSelect').prop(\"disabled\", !enable);\n            $('#rotEnable').prop(\"disabled\", !enable);\n            $('#effectsSelect').prop(\"disabled\", !enable);\n            $('#effectsEnable').prop(\"disabled\", !enable);\n            $('#exposureSelect').prop(\"disabled\", !enable);\n            $('#exposureEnable').prop(\"disabled\", !enable);\n            $('#awbSelect').prop(\"disabled\", !enable);\n            $('#awbEnable').prop(\"disabled\", !enable);\n            $('#mmSelect').prop(\"disabled\", !enable);\n            $('#mmEnable').prop(\"disabled\", !enable);\n            $('#shValue').prop(\"disabled\", !enable);\n            $('#shEnable').prop(\"disabled\", !enable);\n            $('#coValue').prop(\"disabled\", !enable);\n            $('#coEnable').prop(\"disabled\", !enable);\n            $('#brValue').prop(\"disabled\", !enable);\n            $('#brEnable').prop(\"disabled\", !enable);\n            $('#saValue').prop(\"disabled\", !enable);\n            $('#saEnable').prop(\"disabled\", !enable);\n            $('#ISOValue').prop(\"disabled\", !enable);\n            $('#ISOEnable').prop(\"disabled\", !enable);\n            $('#evValue').prop(\"disabled\", !enable);\n            $('#evEnable').prop(\"disabled\", !enable);\n            $('#ssValue').prop(\"disabled\", !enable);\n            $('#ssEnable').prop(\"disabled\", !enable);\n            $('#cfxValue').prop(\"disabled\", !enable);\n            $('#cfxEnable').prop(\"disabled\", !enable);\n           if ( enable)\n            {\n                $('#editConfigButton').text('Stop Editing');\n                $('#configCardBody').show();\n            }\n            else\n            {\n                $('#editConfigButton').text('Configuration');\n                $('#configCardBody').hide();\n            }\n\n        }\n        function editConfig()\n        {\n            editingConfig = !editingConfig;\n            enableConfig(editingConfig);\n            if (!editingConfig)\n            {\n                device.config.rot.value = $('#rotSelect').val();\n                device.config.rot.enabled = $('#rotEnable').prop(\"checked\");\n                device.config.ifx.value = $('#effectsSelect').val();\n                device.config.ifx.enabled = $('#effectsEnable').prop(\"checked\");\n                device.config.ex.value = $('#exposureSelect').val();\n                device.config.ex.enabled = $('#exposureEnable').prop(\"checked\");\n                device.config.awb.value = $('#awbSelect').val();\n                device.config.awb.enabled = $('#awbEnable').prop(\"checked\");\n                device.config.mm.value = $('#mmSelect').val();\n                device.config.mm.enabled = $('#mmEnable').prop(\"checked\");\n                device.config.sh.value = Number($('#shValue').val());\n                device.config.sh.enabled = $('#shEnable').prop(\"checked\");\n                device.config.co.value = Number($('#coValue').val());\n                device.config.co.enabled = $('#coEnable').prop(\"checked\");\n                device.config.br.value = Number($('#brValue').val());\n                device.config.br.enabled = $('#brEnable').prop(\"checked\");\n                device.config.sa.value = Number($('#saValue').val());\n                device.config.sa.enabled = $('#saEnable').prop(\"checked\");\n                device.config.ISO.value = Number($('#ISOValue').val());\n                device.config.ISO.enabled = $('#ISOEnable').prop(\"checked\");\n                device.config.ev.value = Number($('#evValue').val());\n                device.config.ev.enabled = $('#evEnable').prop(\"checked\");\n                device.config.ss.value = Number($('#ssValue').val());\n                device.config.ss.enabled = $('#ssEnable').prop(\"checked\");\n                device.config.cfx.value = $('#cfxValue').val();\n                device.config.cfx.enabled = $('#cfxEnable').prop(\"checked\");\n\n                sendSetting();\n            }\n        }\n        function toggleSnapshotView()\n        {\n            snapshotViewShowing = !snapshotViewShowing;\n            if(snapshotViewShowing)\n            {\n                $('#snapshotCardBody').show();\n            }\n            else\n            {\n                $('#snapshotCardBody').hide();\n            }\n\n        }\n        function takeSnapShot()\n        {\n            device.takeImage.value = 1;\n            sendSetting();\n            $('#takeSnapShotButton').prop(\"disabled\", true);\n            \n        }\n",
+        "template": "// Global Javascript\n        var restfulDevice = \n        {\n            deviceType  : '{{{payload.script.deviceType}}}',\n            name        : '{{{payload.script.name}}}',\n            project     : '{{{payload.script.project}}}'\n        };\n        var mqttDevice = null;\n        var device = null;\n        var pingInterval = 5000;\n        var lastPing = 0;\n        var editingConfig = false;\n        var snapshotViewShowing = true;\n\n        useWebSockets(true);\n        function onDocumentReady()\n        {\n            setRemoteApp(false);\n            if (remoteApp)\n            {\n                getCreds();\n                setInterval(function(){getCreds();}, 1000);\n            }\n            else\n            {\n                $('#userCardId').hide();\n            }\n            setInterval(function()\n            {\n                var now = new Date().getTime();\n                if ((now - lastPing) > pingInterval)\n                {\n                    lastPing = now;\n                    var actionMsg = \n                        {\n                            topic   : restfulDevice.project + '/' +  restfulDevice.deviceType + '/' +  restfulDevice.name + '/ping',\n                            payload : true\n                        };\n                    sendActionMsg('ping', 'ping', actionMsg);\n               }\n            }, 1000);\n            enableConfig(false);\n            $('#configCardBody').hide();\n            toggleSnapshotView();\n            $('#configCardBody').hide();\n            $('#takeSnapShotButton').prop(\"disabled\", true);\n        }\n        function onWebSocketOpen()\n        {\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n//            console.log(msg);\n            switch(msg.topic)\n            {\n                case 'readings':\n                    if ((msg.mqttDevice.name == restfulDevice.name) && (msg.mqttDevice.deviceType == restfulDevice.deviceType)  && (msg.mqttDevice.project == restfulDevice.project) )\n                    {\n                        lastPing = new Date().getTime();\n                        heartbeat();\n                        device = JSON.parse(pako.inflate(msg.payload, { to: 'string' }));\n                        mqttDevice = msg.mqttDevice;\n                        updateDmaReadings();\n                    }\n                    break;\n                case 'renew':\n                    if (msg.userID == userID)\n                    {\n                        updateCookie(msg);\n                    }\n                    break;\n                case 'permissionError':\n                    if (msg.userID == userID)\n                    {\n                        acknowledgeDialog('Permission', 'Error', msg.payload);\n                    }\n                    break;\n                case 'loginExpired':\n                    if (msg.userID == userID)\n                    {\n                       location.reload();\n                    }\n                    break;\n                default:\n                    break;\n            }\n        }\n        function sendSetting()\n        {\n            var actionMsg = \n                {\n                    topic   : mqttDevice.project + '/' +  mqttDevice.deviceType + '/' +  mqttDevice.name + '/setting',\n                    payload : pako.deflate(JSON.stringify(device))\n                };\n            sendActionMsg('setting','setting',actionMsg);\n       }\n        function setScalarValue(settingValue, attrName)\n        {\n            var settingAttr = device[attrName];\n            if ( (settingAttr.alarm.limits.lolo <= settingValue) && (settingValue <= settingAttr.alarm.limits.hihi) )\n            {\n                settingAttr.value = settingValue;\n                sendSetting();\n            } \n            else\n            {\n                acknowledgeDialog('Acknowledge', 'Error', 'Entry outside range! (' + settingAttr.alarm.limits.lolo.toString() + '-' + settingAttr.alarm.limits.hihi.toString() + ' ' + settingAttr.unit);\n            }\n        }\n        function reset(actionFlag)\n        {\n            var headerText = 'Warning';\n            var title = 'Resetting Tray';\n            var text = 'I hope you know what you are doing.';\n            var buttonTexts = ['Reset', 'Cancel'];\n            var buttonFunctions = \n            [\n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                    setScalarValue(actionFlag, 'reset');\n                 }, \n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                }\n            ];\n            if (actionFlag == 2)\n            {\n                title = 'Rebooting Tray';\n                buttonTexts[0] = 'Reboot';\n            }\n            optionDialog(headerText, title, text, buttonTexts, buttonFunctions);\n        }\n// Update Readings Javascript\n        function updateDmaReadings()\n        {\n            $('#linkQualityId').text(device.linkQuality.value);\n            $('#signalLevelId').text(device.signalLevel.value);\n            $('#snapshotTimeStamp').text(new Date(device.timeStamp).toLocaleString('en-SE', { timeZone: 'Europe/Stockholm' }));\n            if (device.manualTrigger.value == 0)\n            {\n                $('#takeSnapShotButton').prop(\"disabled\", false);\n            }\n            else\n            {\n                $('#takeSnapShotButton').prop(\"disabled\", true);\n            }\n            if (device.triggerMode.value == 0)\n            {\n                $('#takeSnapShotButton').show();\n            }\n            else\n            {\n                $('#takeSnapShotButton').hide();\n            }\n\n            if(!editingConfig)\n            {\n                $('#triggerMode').val(device.triggerMode.value);\n                $('#imageDelay').val(device.imageDelay.value.toString());\n                $('#wValue').val(device.config.w.value.toString());\n                $('#wEnable').prop(\"checked\", device.config.w.enabled);\n                $('#rotSelect').val(device.config.rot.value.toString());\n                $('#rotEnable').prop(\"checked\", device.config.rot.enabled);\n                $('#effectsSelect').val(device.config.ifx.value.toString());\n                $('#effectsEnable').prop(\"checked\", device.config.ifx.enabled);\n                $('#exposureSelect').val(device.config.ex.value.toString());\n                $('#exposureEnable').prop(\"checked\", device.config.ex.enabled);\n                $('#awbSelect').val(device.config.awb.value.toString());\n                $('#awbEnable').prop(\"checked\", device.config.awb.enabled);\n                $('#mmSelect').val(device.config.mm.value.toString());\n                $('#mmEnable').prop(\"checked\", device.config.mm.enabled);\n                $('#shValue').val(device.config.sh.value.toString());\n                $('#shEnable').prop(\"checked\", device.config.sh.enabled);\n                $('#coValue').val(device.config.co.value.toString());\n                $('#coEnable').prop(\"checked\", device.config.co.enabled);\n                $('#brValue').val(device.config.br.value.toString());\n                $('#brEnable').prop(\"checked\", device.config.br.enabled);\n                $('#saValue').val(device.config.sa.value.toString());\n                $('#saEnable').prop(\"checked\", device.config.sa.enabled);\n                $('#ISOValue').val(device.config.ISO.value.toString());\n                $('#ISOEnable').prop(\"checked\", device.config.ISO.enabled);\n                $('#evValue').val(device.config.ev.value.toString());\n                $('#evEnable').prop(\"checked\", device.config.ev.enabled);\n                $('#ssValue').val(device.config.ss.value.toString());\n                $('#ssEnable').prop(\"checked\", device.config.ss.enabled);\n                $('#cfxValue').val(device.config.cfx.value.toString());\n                $('#cfxEnable').prop(\"checked\", device.config.cfx.enabled);\n            }\n\n            \n            $('#raspistillImg').attr('src','img/blinky-webcam/' + device.deviceType + '-' + device.name + '.jpg' +'?t=' + device.timeStamp.toString() );\n            $('#raspistillImgLink').attr('href','img/blinky-webcam/' + device.deviceType + '-' + device.name + '.jpg' +'?t=' + device.timeStamp.toString() );\n\n        }\n        function enableConfig(enable)\n        {\n            $('#wValue').prop(\"disabled\", !enable);\n            $('#wEnable').prop(\"disabled\", !enable);\n            $('#rotSelect').prop(\"disabled\", !enable);\n            $('#rotEnable').prop(\"disabled\", !enable);\n            $('#effectsSelect').prop(\"disabled\", !enable);\n            $('#effectsEnable').prop(\"disabled\", !enable);\n            $('#exposureSelect').prop(\"disabled\", !enable);\n            $('#exposureEnable').prop(\"disabled\", !enable);\n            $('#awbSelect').prop(\"disabled\", !enable);\n            $('#awbEnable').prop(\"disabled\", !enable);\n            $('#mmSelect').prop(\"disabled\", !enable);\n            $('#mmEnable').prop(\"disabled\", !enable);\n            $('#shValue').prop(\"disabled\", !enable);\n            $('#shEnable').prop(\"disabled\", !enable);\n            $('#coValue').prop(\"disabled\", !enable);\n            $('#coEnable').prop(\"disabled\", !enable);\n            $('#brValue').prop(\"disabled\", !enable);\n            $('#brEnable').prop(\"disabled\", !enable);\n            $('#saValue').prop(\"disabled\", !enable);\n            $('#saEnable').prop(\"disabled\", !enable);\n            $('#ISOValue').prop(\"disabled\", !enable);\n            $('#ISOEnable').prop(\"disabled\", !enable);\n            $('#evValue').prop(\"disabled\", !enable);\n            $('#evEnable').prop(\"disabled\", !enable);\n            $('#ssValue').prop(\"disabled\", !enable);\n            $('#ssEnable').prop(\"disabled\", !enable);\n            $('#cfxValue').prop(\"disabled\", !enable);\n            $('#cfxEnable').prop(\"disabled\", !enable);\n           if ( enable)\n            {\n                $('#editConfigButton').text('Stop Editing');\n                $('#configCardBody').show();\n            }\n            else\n            {\n                $('#editConfigButton').text('Configuration');\n                $('#configCardBody').hide();\n            }\n\n        }\n        function editConfig()\n        {\n            editingConfig = !editingConfig;\n            enableConfig(editingConfig);\n            if (!editingConfig)\n            {\n                device.config.w.value = Number($('#wValue').val());\n                device.config.w.enabled = $('#wEnable').prop(\"checked\");\n                device.config.h.value = Math.round(0.75 * device.config.w.value);\n                device.config.h.enabled = device.config.w.enabled\n                device.config.rot.value = $('#rotSelect').val();\n                device.config.rot.enabled = $('#rotEnable').prop(\"checked\");\n                device.config.ifx.value = $('#effectsSelect').val();\n                device.config.ifx.enabled = $('#effectsEnable').prop(\"checked\");\n                device.config.ex.value = $('#exposureSelect').val();\n                device.config.ex.enabled = $('#exposureEnable').prop(\"checked\");\n                device.config.awb.value = $('#awbSelect').val();\n                device.config.awb.enabled = $('#awbEnable').prop(\"checked\");\n                device.config.mm.value = $('#mmSelect').val();\n                device.config.mm.enabled = $('#mmEnable').prop(\"checked\");\n                device.config.sh.value = Number($('#shValue').val());\n                device.config.sh.enabled = $('#shEnable').prop(\"checked\");\n                device.config.co.value = Number($('#coValue').val());\n                device.config.co.enabled = $('#coEnable').prop(\"checked\");\n                device.config.br.value = Number($('#brValue').val());\n                device.config.br.enabled = $('#brEnable').prop(\"checked\");\n                device.config.sa.value = Number($('#saValue').val());\n                device.config.sa.enabled = $('#saEnable').prop(\"checked\");\n                device.config.ISO.value = Number($('#ISOValue').val());\n                device.config.ISO.enabled = $('#ISOEnable').prop(\"checked\");\n                device.config.ev.value = Number($('#evValue').val());\n                device.config.ev.enabled = $('#evEnable').prop(\"checked\");\n                device.config.ss.value = Number($('#ssValue').val());\n                device.config.ss.enabled = $('#ssEnable').prop(\"checked\");\n                device.config.cfx.value = $('#cfxValue').val();\n                device.config.cfx.enabled = $('#cfxEnable').prop(\"checked\");\n                device.triggerMode.value = $('#triggerMode').val();\n                device.imageDelay.value = $('#imageDelay').val();\n                if (device.triggerMode.value > 0)\n                {\n                    $('#takeSnapShotButton').hide();\n                }\n                else\n                {\n                    $('#takeSnapShotButton').show();\n                }\n\n                sendSetting();\n            }\n        }\n        function toggleSnapshotView()\n        {\n            snapshotViewShowing = !snapshotViewShowing;\n            if(snapshotViewShowing)\n            {\n                $('#snapshotCardBody').show();\n            }\n            else\n            {\n                $('#snapshotCardBody').hide();\n            }\n\n        }\n        function takeSnapShot()\n        {\n            device.manualTrigger.value = 1;\n            sendSetting();\n            $('#takeSnapShotButton').prop(\"disabled\", true);\n            \n        }\n",
         "output": "str",
         "x": 670,
         "y": 380,
@@ -352,35 +374,6 @@
         ]
     },
     {
-        "id": "7e45d4c8.e8a3cc",
-        "type": "inject",
-        "z": "5f562f66.a301e",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "2",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 520,
-        "wires": [
-            [
-                "4e5c46c5.5583d8"
-            ]
-        ]
-    },
-    {
         "id": "84a9b3c6.82737",
         "type": "exec",
         "z": "5f562f66.a301e",
@@ -391,8 +384,8 @@
         "timer": "",
         "oldrc": false,
         "name": "raspistill",
-        "x": 380,
-        "y": 460,
+        "x": 540,
+        "y": 480,
         "wires": [
             [
                 "f8373209.33156"
@@ -406,20 +399,17 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Prep raspistill command",
-        "func": "var imageMsg = null;\nvar noImageMsg = null;\nvar device = flow.get('device');\nif (device.takeImage.value == 1)\n{\n    var cmd = ' -o html-static/img/raspistill/';\n    cmd = cmd + device.deviceType + '-' + device.name + '.jpg';\n    if (device.config.rot.enabled) cmd = cmd + ' -rot ' + device.config.rot.value.toString();\n    if (device.config.t.enabled)   cmd = cmd + ' -t '   + device.config.t.value.toString();\n    if (device.config.h.enabled)   cmd = cmd + ' -h '   + device.config.h.value.toString();\n    if (device.config.w.enabled)   cmd = cmd + ' -w '   + device.config.w.value.toString();\n    if (device.config.ifx.enabled) cmd = cmd + ' -ifx ' + device.config.ifx.value.toString();\n    if (device.config.ex.enabled)  cmd = cmd + ' -ex '  + device.config.ex.value.toString();\n    if (device.config.awb.enabled) cmd = cmd + ' -awb ' + device.config.awb.value.toString();\n    if (device.config.mm.enabled)  cmd = cmd + ' -mm '  + device.config.mm.value.toString();\n    if (device.config.sh.enabled)  cmd = cmd + ' -sh '  + device.config.sh.value.toString();\n    if (device.config.co.enabled)  cmd = cmd + ' -co '  + device.config.co.value.toString();\n    if (device.config.br.enabled)  cmd = cmd + ' -br '  + device.config.br.value.toString();\n    if (device.config.sa.enabled)  cmd = cmd + ' -sa '  + device.config.sa.value.toString();\n    if (device.config.ISO.enabled) cmd = cmd + ' -ISO ' + device.config.ISO.value.toString();\n    if (device.config.ev.enabled)  cmd = cmd + ' -ev '  + device.config.ev.value.toString();\n    if (device.config.ss.enabled)  cmd = cmd + ' -ss '  + device.config.ss.value.toString();\n    if (device.config.cfx.enabled) cmd = cmd + ' -cfx ' + device.config.cfx.value.toString();\n    imageMsg = {topic : 'takeImage', payload : cmd};\n}\nelse\n{\n    noImageMsg = {topic : 'noImage', payload : device};\n}\nreturn [imageMsg,noImageMsg];\n",
-        "outputs": 2,
+        "func": "var imageMsg = null;\nvar device = flow.get('device');\nvar cmd = ' -o html-static/img/blinky-webcam/';\ncmd = cmd + device.deviceType + '-' + device.name + '.jpg';\n//var cmd = ' -o -';\nif (device.config.rot.enabled) cmd = cmd + ' -rot ' + device.config.rot.value.toString();\nif (device.config.t.enabled)   cmd = cmd + ' -t '   + device.config.t.value.toString();\nif (device.config.h.enabled)   cmd = cmd + ' -h '   + device.config.h.value.toString();\nif (device.config.w.enabled)   cmd = cmd + ' -w '   + device.config.w.value.toString();\nif (device.config.ifx.enabled) cmd = cmd + ' -ifx ' + device.config.ifx.value.toString();\nif (device.config.ex.enabled)  cmd = cmd + ' -ex '  + device.config.ex.value.toString();\nif (device.config.awb.enabled) cmd = cmd + ' -awb ' + device.config.awb.value.toString();\nif (device.config.mm.enabled)  cmd = cmd + ' -mm '  + device.config.mm.value.toString();\nif (device.config.sh.enabled)  cmd = cmd + ' -sh '  + device.config.sh.value.toString();\nif (device.config.co.enabled)  cmd = cmd + ' -co '  + device.config.co.value.toString();\nif (device.config.br.enabled)  cmd = cmd + ' -br '  + device.config.br.value.toString();\nif (device.config.sa.enabled)  cmd = cmd + ' -sa '  + device.config.sa.value.toString();\nif (device.config.ISO.enabled) cmd = cmd + ' -ISO ' + device.config.ISO.value.toString();\nif (device.config.ev.enabled)  cmd = cmd + ' -ev '  + device.config.ev.value.toString();\nif (device.config.ss.enabled)  cmd = cmd + ' -ss '  + device.config.ss.value.toString();\nif (device.config.cfx.enabled) cmd = cmd + ' -cfx ' + device.config.cfx.value.toString();\nflow.set('cameraInUse',true);\nimageMsg = {topic : 'takeImage', payload : cmd};\nreturn imageMsg;\n",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 330,
-        "y": 520,
+        "y": 480,
         "wires": [
             [
                 "84a9b3c6.82737"
-            ],
-            [
-                "1183f5a4.d5d21a"
             ]
         ]
     },
@@ -453,8 +443,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 540,
-        "y": 600,
+        "x": 940,
+        "y": 460,
         "wires": [
             [
                 "76c6cbef.b885a4"
@@ -471,10 +461,12 @@
         "chunk": false,
         "sendError": false,
         "encoding": "none",
-        "x": 740,
-        "y": 460,
+        "x": 720,
+        "y": 680,
         "wires": [
-            []
+            [
+                "c786f7a7.c95d08"
+            ]
         ]
     },
     {
@@ -482,18 +474,18 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Get Image filename",
-        "func": "device = flow.get('device');\ndevice.takeImage.value = 0;\ndevice.timeStamp = new Date().getTime();\nvar filename = 'html-static/img/raspistill/' + device.deviceType + '-' + device.name + '.jpg';\nreturn {topic: 'readFile', 'filename':filename};",
+        "func": "device = flow.get('device');\ndevice.manualTrigger.value = 0;\ndevice.timeStamp = new Date().getTime();\nflow.set('cameraInUse',false);\nvar filename = 'html-static/img/blinky-webcam/' + device.deviceType + '-' + device.name + '.jpg';\nreturn {topic: 'readFile', 'filename':filename};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 550,
+        "x": 710,
         "y": 460,
         "wires": [
             [
-                "5940639.346419c",
-                "1183f5a4.d5d21a"
+                "1183f5a4.d5d21a",
+                "5940639.346419c"
             ]
         ]
     },
@@ -506,7 +498,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "<!-- Dashboard HTML -->\n                <div class='card'>\n                    <div class='row'>\n                        <div class='col-md-2'>\n                        </div>\n                        <div class='col-md-8'>\n                            <button class='btn btn-block card-button big-text' id=\"editConfigButton\" onclick=\"editConfig('')\" >Configuration</button>\n                         </div>\n                        <div class='col-md-2'>\n                        </div>\n                    </div>\n                    <div class='card-body' align=\"center\" id='configCardBody'>\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width=\"100%\">\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Rotation</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"rotSelect\">\n                                          <option value=\"0\">0</option>\n                                          <option value=\"90\">90</option>\n                                          <option value=\"180\">180</option>\n                                          <option value=\"270\">270</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"rotEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Effects</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"effectsSelect\">\n                                            <option value=\"none\">none</option>\n                                            <option value=\"negative\">negative</option>\n                                            <option value=\"solarise\">solarise</option>\n                                            <option value=\"sketch\">sketch</option>\n                                            <option value=\"denoise\">denoise</option>\n                                            <option value=\"emboss\">emboss</option>\n                                            <option value=\"oilpaint\">oilpaint</option>\n                                            <option value=\"hatch\">hatch</option>\n                                            <option value=\"gpen\">gpen</option>\n                                            <option value=\"pastel\">pastel</option>\n                                            <option value=\"watercolour\">water colour</option>\n                                            <option value=\"film\">film</option>\n                                            <option value=\"blur\">blur</option>\n                                            <option value=\"saturation\">saturation</option>\n                                            <option value=\"colourswap\">colour swap</option>\n                                            <option value=\"washedout\">washed out</option>\n                                            <option value=\"posterise\">posterise</option>\n                                            <option value=\"colourpoint\">colour point</option>\n                                            <option value=\"colourbalance\">colour balance</option>\n                                            <option value=\"cartoon\">cartoon</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"effectsEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Exposure</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"exposureSelect\">\n                                            <option value=\"off\">off</option>\n                                            <option value=\"auto\">auto</option>\n                                            <option value=\"night\">night</option>\n                                            <option value=\"nightpreview\">nightpreview</option>\n                                            <option value=\"backlight\">backlight</option>\n                                            <option value=\"spotlight\">spotlight</option>\n                                            <option value=\"sports\">sports</option>\n                                            <option value=\"snow\">snow</option>\n                                            <option value=\"beach\">beach</option>\n                                            <option value=\"verylong\">verylong</option>\n                                            <option value=\"fixedfps\">fixedfps</option>\n                                            <option value=\"antishake\">antishake</option>\n                                            <option value=\"fireworks\">fireworks</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"exposureEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >AWB</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"awbSelect\">\n                                            <option value=\"off\">off</option>\n                                            <option value=\"auto\">auto</option>\n                                            <option value=\"sun\">sun</option>\n                                            <option value=\"cloud\">cloud</option>\n                                            <option value=\"shade\">shade</option>\n                                            <option value=\"tungsten\">tungsten</option>\n                                            <option value=\"fluorescent\">fluorescent</option>\n                                            <option value=\"incandescent\">incandescent</option>\n                                            <option value=\"flash\">flash</option>\n                                            <option value=\"horizon\">horizon</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"awbEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Meter Modes</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"mmSelect\">\n                                            <option value=\"average\">average</option>\n                                            <option value=\"spot\">spot</option>\n                                            <option value=\"backlit\">backlit</option>\n                                            <option value=\"matrix\">matrix</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"mmEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Sharpness</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"shValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"shEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Contrast</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"coValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"coEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Brightness</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"brValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"brEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Saturation</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"saValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"saEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >ISO</span>\n                                        <span >(100 to 800)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"ISOValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"ISOEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >EV-Comp</span>\n                                        <span >(-10 to 10)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"evValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"evEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Shutter Speed</span>\n                                        <span >(uS 0 to 60000)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"ssValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"ssEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Color effect</span>\n                                        <span >(U:V)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"cfxValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"cfxEnable\"></td>\n                                </tr>\n\n                            </table>\n                        </div>\n                    </div>\n                </div>\n",
+        "template": "<!-- Dashboard HTML -->\n                <div class='card'>\n                    <div class='row'>\n                        <div class='col-md-2'>\n                        </div>\n                        <div class='col-md-8'>\n                            <button class='btn btn-block card-button big-text' id=\"editConfigButton\" onclick=\"editConfig('')\" >Configuration</button>\n                         </div>\n                        <div class='col-md-2'>\n                        </div>\n                    </div>\n                    <div class='card-body' align=\"center\" id='configCardBody'>\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width=\"100%\">\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Image Delay (mS)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"imageDelay\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"8\" />\n                                    </td>\n                                    <td width='15%'>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Trigger Mode</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\"  id=\"triggerMode\" >\n                                            <option value=\"0\">Manual</option>\n                                            <option value=\"1\">Periodic</option>\n                                        </select>\n                                    </td>\n                                    <td width='15%'>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Width</span>\n                                        <span >(64 to 3280)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"wValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"wEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Rotation</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"rotSelect\">\n                                          <option value=\"0\">0</option>\n                                          <option value=\"90\">90</option>\n                                          <option value=\"180\">180</option>\n                                          <option value=\"270\">270</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"rotEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Effects</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"effectsSelect\">\n                                            <option value=\"none\">none</option>\n                                            <option value=\"negative\">negative</option>\n                                            <option value=\"solarise\">solarise</option>\n                                            <option value=\"sketch\">sketch</option>\n                                            <option value=\"denoise\">denoise</option>\n                                            <option value=\"emboss\">emboss</option>\n                                            <option value=\"oilpaint\">oilpaint</option>\n                                            <option value=\"hatch\">hatch</option>\n                                            <option value=\"gpen\">gpen</option>\n                                            <option value=\"pastel\">pastel</option>\n                                            <option value=\"watercolour\">water colour</option>\n                                            <option value=\"film\">film</option>\n                                            <option value=\"blur\">blur</option>\n                                            <option value=\"saturation\">saturation</option>\n                                            <option value=\"colourswap\">colour swap</option>\n                                            <option value=\"washedout\">washed out</option>\n                                            <option value=\"posterise\">posterise</option>\n                                            <option value=\"colourpoint\">colour point</option>\n                                            <option value=\"colourbalance\">colour balance</option>\n                                            <option value=\"cartoon\">cartoon</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"effectsEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Exposure</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"exposureSelect\">\n                                            <option value=\"off\">off</option>\n                                            <option value=\"auto\">auto</option>\n                                            <option value=\"night\">night</option>\n                                            <option value=\"nightpreview\">nightpreview</option>\n                                            <option value=\"backlight\">backlight</option>\n                                            <option value=\"spotlight\">spotlight</option>\n                                            <option value=\"sports\">sports</option>\n                                            <option value=\"snow\">snow</option>\n                                            <option value=\"beach\">beach</option>\n                                            <option value=\"verylong\">verylong</option>\n                                            <option value=\"fixedfps\">fixedfps</option>\n                                            <option value=\"antishake\">antishake</option>\n                                            <option value=\"fireworks\">fireworks</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"exposureEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >AWB</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"awbSelect\">\n                                            <option value=\"off\">off</option>\n                                            <option value=\"auto\">auto</option>\n                                            <option value=\"sun\">sun</option>\n                                            <option value=\"cloud\">cloud</option>\n                                            <option value=\"shade\">shade</option>\n                                            <option value=\"tungsten\">tungsten</option>\n                                            <option value=\"fluorescent\">fluorescent</option>\n                                            <option value=\"incandescent\">incandescent</option>\n                                            <option value=\"flash\">flash</option>\n                                            <option value=\"horizon\">horizon</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"awbEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Meter Modes</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <select class=\"custom-select big-text\" style=\"height:70px;line-height:70px;\" id=\"mmSelect\">\n                                            <option value=\"average\">average</option>\n                                            <option value=\"spot\">spot</option>\n                                            <option value=\"backlit\">backlit</option>\n                                            <option value=\"matrix\">matrix</option>\n                                        </select>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"mmEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Sharpness</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"shValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"shEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Contrast</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"coValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"coEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Brightness</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"brValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"brEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Saturation</span>\n                                        <span >(-100 to 100)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"saValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"saEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >ISO</span>\n                                        <span >(100 to 800)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"ISOValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"ISOEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >EV-Comp</span>\n                                        <span >(-10 to 10)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"evValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"evEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Shutter Speed</span>\n                                        <span >(uS 0 to 60000)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"ssValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"ssEnable\"></td>\n                                </tr>\n                                <tr>\n                                    <td width='45%'>\n                                        <span class='card-text' >Color effect</span>\n                                        <span >(U:V)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"cfxValue\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"9\"/>\n                                    </td>\n                                    <td width=\"15%\" align=\"center\"><input type=\"checkbox\" class=\"inputLarger\" id=\"cfxEnable\"></td>\n                                </tr>\n\n                            </table>\n                        </div>\n                    </div>\n                </div>\n",
         "output": "str",
         "x": 990,
         "y": 420,
@@ -521,7 +513,7 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Save device config in Memory",
-        "func": "msg.payload.reset.value = 0;\nmsg.payload.takeImage.value = 0;\nflow.set('device', msg.payload);\nflow.set('newSetting', 1);\nreturn msg;",
+        "func": "msg.payload.reset.value = 0;\nmsg.payload.manualTrigger.value = 0;\n//msg.payload.triggerMode.value = 0;\nflow.set('device', msg.payload);\nflow.set('newSetting', 1);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -550,7 +542,7 @@
         "y": 140,
         "wires": [
             [
-                "301d90f0.3cf19"
+                "397e756b.d98d0a"
             ]
         ]
     },
@@ -622,11 +614,12 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Init flow Variables",
-        "func": "var mqttSplit = msg.payload.split('/');\nvar deviceProps = {\n    project     :   mqttSplit[0],\n    deviceType  :   mqttSplit[1],\n    name        :   mqttSplit[2],\n    configFile  :   mqttSplit[1] + '-' + mqttSplit[2] + '.json'\n};\nflow.set('deviceProps',deviceProps);\nflow.set('newSetting',0);\nflow.set('bluetoothCheckSum',64);\nreturn {topic: 'readFile', 'filename':deviceProps.configFile};",
+        "func": "var mqttSplit = msg.payload.split('/');\nvar deviceProps = {\n    project     :   mqttSplit[0],\n    deviceType  :   mqttSplit[1],\n    name        :   mqttSplit[2],\n    configFile  :   mqttSplit[1] + '-' + mqttSplit[2] + '.json'\n};\nflow.set('deviceProps',deviceProps);\nflow.set('newSetting',0);\nflow.set('cameraInUse',false);\nflow.set('lastTriggerTime',new Date().getTime());\nreturn {topic: 'readFile', 'filename':deviceProps.configFile};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 290,
         "y": 40,
         "wires": [
@@ -643,11 +636,11 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 290,
+        "x": 470,
         "y": 140,
         "wires": [
             [
-                "397e756b.d98d0a"
+                "b57df2cc.53b72"
             ]
         ]
     },
@@ -656,16 +649,17 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Filter MQTT",
-        "func": "return {topic:msg.topic.split('/')[3], payload:msg.payload};",
+        "func": "var topic = msg.topic.split('/')[3];\nif (topic == 'image') return null;\nreturn {topic:topic, payload:msg.payload};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 430,
+        "libs": [],
+        "x": 310,
         "y": 140,
         "wires": [
             [
-                "b57df2cc.53b72"
+                "301d90f0.3cf19"
             ]
         ]
     },
@@ -697,7 +691,9 @@
             [
                 "1fcb4990.3e8c66"
             ],
-            []
+            [
+                "76c6cbef.b885a4"
+            ]
         ]
     },
     {
@@ -1689,8 +1685,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
-        "y": 600,
+        "x": 1160,
+        "y": 460,
         "wires": [
             [
                 "2fc82ec3.8e4f22"
@@ -1707,8 +1703,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1220,
-        "y": 600,
+        "x": 1640,
+        "y": 520,
         "wires": [
             [
                 "fa3bdddb.4a265"
@@ -1730,8 +1726,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 920,
-        "y": 600,
+        "x": 1340,
+        "y": 460,
         "wires": [
             [
                 "6b62af7d.b70a9"
@@ -1746,8 +1742,8 @@
         "links": [
             "999aa7fa.377978"
         ],
-        "x": 1375,
-        "y": 600,
+        "x": 1775,
+        "y": 520,
         "wires": []
     },
     {
@@ -1755,12 +1751,162 @@
         "type": "gzip",
         "z": "5f562f66.a301e",
         "name": "",
-        "x": 1050,
-        "y": 600,
+        "x": 1470,
+        "y": 460,
         "wires": [
             [
-                "3851c9c6.31cce6"
+                "3851c9c6.31cce6",
+                "1140aed7.58f081"
             ]
         ]
+    },
+    {
+        "id": "bfc9a6c.b3b1f58",
+        "type": "inject",
+        "z": "5f562f66.a301e",
+        "name": "5 Hz",
+        "repeat": "0.2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "15",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 580,
+        "wires": [
+            [
+                "1ad8f49f.933d5b"
+            ]
+        ]
+    },
+    {
+        "id": "1ad8f49f.933d5b",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Programmable interval",
+        "func": "if (flow.get('cameraInUse')) return null;\nif(flow.get('device').triggerMode.value  == 0)\n{\n    if(flow.get('device').manualTrigger.value  == 1) return msg;\n}\nif(flow.get('device').triggerMode.value  == 1)\n{\n    var now = new Date().getTime();\n    if ((now - flow.get('lastTriggerTime')) > flow.get('device').imageDelay.value) \n    {\n        flow.set('lastTriggerTime',now);\n        return msg;\n    }\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 580,
+        "wires": [
+            [
+                "4e5c46c5.5583d8"
+            ]
+        ]
+    },
+    {
+        "id": "1140aed7.58f081",
+        "type": "mqtt out",
+        "z": "5f562f66.a301e",
+        "name": "Publish Readings",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "244c3d5e.2550e2",
+        "x": 1630,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "c786f7a7.c95d08",
+        "type": "base64",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 860,
+        "y": 680,
+        "wires": [
+            [
+                "4041734d.1a009c",
+                "c6bd4d68.f3506"
+            ]
+        ]
+    },
+    {
+        "id": "4041734d.1a009c",
+        "type": "template",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<img width=\"320px\" height=\"240px\" src=\"data:image/jpg;base64,{{{payload}}}\">",
+        "output": "str",
+        "x": 1040,
+        "y": 680,
+        "wires": [
+            [
+                "731de14b.8c673"
+            ]
+        ]
+    },
+    {
+        "id": "731de14b.8c673",
+        "type": "ui_template",
+        "z": "5f562f66.a301e",
+        "group": "c7a43587.2944e8",
+        "name": "",
+        "order": 0,
+        "width": "6",
+        "height": "5",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "x": 1200,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c6bd4d68.f3506",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Image Topic",
+        "func": "msg.topic = flow.get('deviceProps').project + '/' + flow.get('deviceProps').deviceType + '/' + flow.get('deviceProps').name + '/image';\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 760,
+        "wires": [
+            [
+                "b322696.f51ac98"
+            ]
+        ]
+    },
+    {
+        "id": "b322696.f51ac98",
+        "type": "mqtt out",
+        "z": "5f562f66.a301e",
+        "name": "Publish Image",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "244c3d5e.2550e2",
+        "x": 1220,
+        "y": 760,
+        "wires": []
     }
 ]

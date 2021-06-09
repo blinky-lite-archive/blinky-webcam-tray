@@ -1,13 +1,13 @@
 {
-  "deviceType": "blinky-lite-cam",
+  "deviceType": "blinky-webcam",
   "name": "01",
   "arcPeriod": 60000,
-  "timeStamp": 1623174944972,
+  "timeStamp": 1623225891304,
   "lastArchive": 1584283329231,
   "linkQuality": {
     "action": "reading",
     "type": "scalar",
-    "value": 70,
+    "value": 60,
     "unit": "/70",
     "alarm": {
       "value": 0,
@@ -27,7 +27,7 @@
   "signalLevel": {
     "action": "reading",
     "type": "scalar",
-    "value": -38,
+    "value": -50,
     "unit": "dBm",
     "alarm": {
       "value": 0,
@@ -64,7 +64,7 @@
       }
     }
   },
-  "takeImage": {
+  "manualTrigger": {
     "action": "setting",
     "type": "scalar",
     "value": 0,
@@ -76,6 +76,46 @@
         "low": -1,
         "high": 2,
         "hihi": 3
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "triggerMode": {
+    "action": "setting",
+    "type": "scalar",
+    "value": "1",
+    "unit": "unit",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -2,
+        "low": -1,
+        "high": 2,
+        "hihi": 3
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "imageDelay": {
+    "action": "setting",
+    "type": "scalar",
+    "value": "20000",
+    "unit": "mS",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": 5000,
+        "low": 6000,
+        "high": 900000,
+        "hihi": 900000
       },
       "notify": {
         "name": "",

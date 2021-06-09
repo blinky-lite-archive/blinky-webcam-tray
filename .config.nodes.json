@@ -688,5 +688,24 @@
                 "file": "/home/pi/blinky-webcam-tray/node_modules/node-red-contrib-gzip/lib/gzip.js"
             }
         }
+    },
+    "node-red-node-base64": {
+        "name": "node-red-node-base64",
+        "version": "0.3.0",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "base64": {
+                "name": "base64",
+                "types": [
+                    "base64"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-node-base64",
+                "file": "/home/pi/blinky-webcam-tray/node_modules/node-red-node-base64/70-base64.js"
+            }
+        }
     }
 }
