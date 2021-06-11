@@ -2,12 +2,12 @@
   "deviceType": "blinky-webcam",
   "name": "01",
   "arcPeriod": 60000,
-  "timeStamp": 1623225891304,
+  "timeStamp": 1623420795349,
   "lastArchive": 1584283329231,
   "linkQuality": {
     "action": "reading",
     "type": "scalar",
-    "value": 60,
+    "value": 57,
     "unit": "/70",
     "alarm": {
       "value": 0,
@@ -27,7 +27,7 @@
   "signalLevel": {
     "action": "reading",
     "type": "scalar",
-    "value": -50,
+    "value": -53,
     "unit": "dBm",
     "alarm": {
       "value": 0,
@@ -67,7 +67,7 @@
   "manualTrigger": {
     "action": "setting",
     "type": "scalar",
-    "value": 0,
+    "value": 1,
     "unit": "unit",
     "alarm": {
       "value": 0,
@@ -87,7 +87,7 @@
   "triggerMode": {
     "action": "setting",
     "type": "scalar",
-    "value": "1",
+    "value": "0",
     "unit": "unit",
     "alarm": {
       "value": 0,
@@ -139,18 +139,18 @@
     },
     "t": {
       "value": 1,
-      "enabled": true
+      "enabled": false
     },
     "ifx": {
-      "value": "sketch",
+      "value": "none",
       "enabled": false
     },
     "ex": {
-      "value": "off",
+      "value": "auto",
       "enabled": false
     },
     "awb": {
-      "value": "off",
+      "value": "cloud",
       "enabled": false
     },
     "mm": {
@@ -186,7 +186,7 @@
       "enabled": false
     },
     "cfx": {
-      "value": "0",
+      "value": "0:0",
       "enabled": false
     }
   }
