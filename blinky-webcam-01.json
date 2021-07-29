@@ -2,12 +2,12 @@
   "deviceType": "blinky-webcam",
   "name": "01",
   "arcPeriod": 60000,
-  "timeStamp": 1623420795349,
+  "timeStamp": 1624001953038,
   "lastArchive": 1584283329231,
   "linkQuality": {
     "action": "reading",
     "type": "scalar",
-    "value": 57,
+    "value": 60,
     "unit": "/70",
     "alarm": {
       "value": 0,
@@ -27,7 +27,7 @@
   "signalLevel": {
     "action": "reading",
     "type": "scalar",
-    "value": -53,
+    "value": -50,
     "unit": "dBm",
     "alarm": {
       "value": 0,
@@ -67,7 +67,7 @@
   "manualTrigger": {
     "action": "setting",
     "type": "scalar",
-    "value": 1,
+    "value": 0,
     "unit": "unit",
     "alarm": {
       "value": 0,
@@ -87,7 +87,7 @@
   "triggerMode": {
     "action": "setting",
     "type": "scalar",
-    "value": "0",
+    "value": "1",
     "unit": "unit",
     "alarm": {
       "value": 0,
@@ -126,7 +126,7 @@
   },
   "config": {
     "rot": {
-      "value": "270",
+      "value": "90",
       "enabled": true
     },
     "h": {
@@ -147,15 +147,15 @@
     },
     "ex": {
       "value": "auto",
-      "enabled": false
+      "enabled": true
     },
     "awb": {
-      "value": "cloud",
-      "enabled": false
+      "value": "fluorescent",
+      "enabled": true
     },
     "mm": {
       "value": "average",
-      "enabled": false
+      "enabled": true
     },
     "sh": {
       "value": 0,

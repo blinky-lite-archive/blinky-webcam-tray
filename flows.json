@@ -1908,5 +1908,214 @@
         "x": 1220,
         "y": 760,
         "wires": []
+    },
+    {
+        "id": "d03e91b4.79b7d",
+        "type": "inject",
+        "z": "5f562f66.a301e",
+        "name": "Each 12:00",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "01 12 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "time2",
+        "payloadType": "str",
+        "x": 130,
+        "y": 820,
+        "wires": [
+            [
+                "7ae6afdf.e135"
+            ]
+        ]
+    },
+    {
+        "id": "b908e2f6.98b7e",
+        "type": "exec",
+        "z": "5f562f66.a301e",
+        "command": "cp ",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "cp image to daily images",
+        "x": 850,
+        "y": 820,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "774b2d40.f04a84",
+        "type": "inject",
+        "z": "5f562f66.a301e",
+        "name": "Each 8:30",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 08 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "time1",
+        "payloadType": "str",
+        "x": 130,
+        "y": 760,
+        "wires": [
+            [
+                "7ae6afdf.e135"
+            ]
+        ]
+    },
+    {
+        "id": "6710219e.94367",
+        "type": "inject",
+        "z": "5f562f66.a301e",
+        "name": "Each 15:30",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 15 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "time3",
+        "payloadType": "str",
+        "x": 130,
+        "y": 880,
+        "wires": [
+            [
+                "7ae6afdf.e135"
+            ]
+        ]
+    },
+    {
+        "id": "3d04f32c.8b318c",
+        "type": "delay",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 780,
+        "y": 880,
+        "wires": [
+            [
+                "a0e58f9e.8a558"
+            ]
+        ]
+    },
+    {
+        "id": "a0e58f9e.8a558",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Set Camera ready",
+        "func": "flow.set('cameraInUse',false);\nreturn msg;",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "42e1d6b4.ed2348",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "Create copy command",
+        "func": "var deviceProps = flow.get('deviceProps');\nvar deviceName = deviceProps.deviceType + '-' + deviceProps.name\nvar fromFile = \"/home/pi/blinky-webcam-tray/html-static/img/blinky-webcam/\" + deviceName + \".jpg\";\nvar now = new Date();\nvar year = now.getFullYear().toString();\nvar month = (now.getMonth() + 1).toString();\nif (now.getMonth() < 9) month = '0' + month;\nvar day = now.getDate().toString();\nif (now.getDate() < 10) day = '0' + day;\nvar toFile = '/home/pi/blinky-daily-images/' + msg.payload + '/' + deviceProps.deviceType + '-' + deviceProps.name + '-' + year + '-' + month + '-' + day + '.jpg';\nmsg.payload = fromFile + ' ' + toFile;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 820,
+        "wires": [
+            [
+                "b908e2f6.98b7e",
+                "3d04f32c.8b318c"
+            ]
+        ]
+    },
+    {
+        "id": "7ae6afdf.e135",
+        "type": "function",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "func": "if (!flow.get('cameraInUse'))\n{\n    flow.set('cameraInUse',true);\n    return [msg,null];\n}\nelse\n{\n    return [null,msg];\n}\nreturn msg;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 820,
+        "wires": [
+            [
+                "42e1d6b4.ed2348"
+            ],
+            [
+                "83898b22.e1cba8"
+            ]
+        ]
+    },
+    {
+        "id": "83898b22.e1cba8",
+        "type": "delay",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 500,
+        "y": 880,
+        "wires": [
+            [
+                "7ae6afdf.e135"
+            ]
+        ]
     }
 ]
